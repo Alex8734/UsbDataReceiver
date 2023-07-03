@@ -1,4 +1,5 @@
 ﻿using NationalInstruments.DAQmx;
+using UsbDataReceiver;
 using Task = NationalInstruments.DAQmx.Task;
 using UsbDataReceiver.Extensions;
 
@@ -37,7 +38,7 @@ while (true)
         Console.WriteLine("data is null");
         continue;
     }
-    Console.WriteLine($"volts: {data[0].Round(2):F2} ampere: {data[1].Round(2):F2} temperature: {data[2].Round(2):F2}");
+    Console.WriteLine($"volts: {data[0].Round(2),5:F2} ampere: {data[1].Round(2),5:F2} temperature: {data[2].Round(2),5:F2}");
     
 }
 
