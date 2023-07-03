@@ -2,26 +2,25 @@
 using Task = NationalInstruments.DAQmx.Task;
 using UsbDataReceiver.Extensions;
 
-Task voltageInTask = new();
-Task ampereInTask = new();
-Task temperatureInTask = new();
+Task measureTask = new();
 
 //setup channels
-var voltageAiChannel = voltageInTask.AIChannels.CreateVoltageChannel(
+
+var voltageAiChannel = measureTask.AIChannels.CreateVoltageChannel(
     "Dev2/ai0",
     "VoltageChannel",
     AITerminalConfiguration.Rse,
     0,
     10,
     AIVoltageUnits.Volts);
-var ampereAiChannel = ampereInTask.AIChannels.CreateVoltageChannel(
+var ampereAiChannel = measureTask.AIChannels.CreateVoltageChannel(
     "Dev2/ai1",
     "AmpereChannel",
     AITerminalConfiguration.Rse,
     0,
     10,
     AIVoltageUnits.Volts);
-var temperatureAiChannel = temperatureInTask.AIChannels.CreateVoltageChannel(
+var temperatureAiChannel = measureTask.AIChannels.CreateVoltageChannel(
     "Dev2/ai2",
     "TemperatureChannel",
     AITerminalConfiguration.Rse,
@@ -29,15 +28,16 @@ var temperatureAiChannel = temperatureInTask.AIChannels.CreateVoltageChannel(
     10,
     AIVoltageUnits.Volts);
 
-AnalogSingleChannelReader reader = new(voltageInTask.Stream);
-AnalogSingleChannelReader reader2 = new(ampereInTask.Stream);
-AnalogSingleChannelReader reader3 = new(temperatureInTask.Stream);
+AnalogMultiChannelReader reader = new(measureTask.Stream);
 while (true)
 {
-    var volts = reader.ReadSingleSample().Round(2);
-    var ampere = reader2.ReadSingleSample().Round(2);
-    var temperature = reader3.ReadSingleSample().Round(2);
-    Console.WriteLine($"volts: {volts}, ampere: {ampere}, temperature: {temperature}");
+    var data = reader.ReadSingleSample();
+    if(data is null)
+    {
+        Console.WriteLine("data is null");
+        continue;
+    }
+    Console.WriteLine($"volts: {data[0].Round(2):F2} ampere: {data[1].Round(2):F2} temperature: {data[2].Round(2):F2}");
     
 }
 
