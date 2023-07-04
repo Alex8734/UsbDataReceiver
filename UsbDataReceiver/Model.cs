@@ -1,6 +1,8 @@
-﻿namespace UsbDataReceiver;
+﻿using System.Reflection;
 
-public abstract record PortDescription (int Id, MeasurementType Type, IODevice Device);
+namespace UsbDataReceiver;
+
+public record PortDescription (int Id, MeasurementType Type, IODevice Device, string Name);
 
 public enum MeasurementType
 {

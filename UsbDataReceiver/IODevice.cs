@@ -2,10 +2,13 @@
 namespace UsbDataReceiver;
 
 // ReSharper disable once InconsistentNaming
-public abstract class IODevice
+public class IODevice
 {
     public List<int> AvailablePorts { get; }
-    public string Name { get; set; }
+    /// <summary>
+    ///     Device display-name of the IODevice
+    /// </summary>
+    public string Name { get;}
     
     public IODevice(string name,int portsCount)
     {
@@ -15,6 +18,7 @@ public abstract class IODevice
     
     public int GetNextAvailablePort()
     {
+        if (AvailablePorts.Count == 0) return -1;
         var port = AvailablePorts.First();
         AvailablePorts.Remove(port);
         return port;

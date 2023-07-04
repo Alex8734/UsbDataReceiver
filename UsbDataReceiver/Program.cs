@@ -1,8 +1,38 @@
 ﻿using NationalInstruments.DAQmx;
 using UsbDataReceiver;
+using UsbDataReceiver.Log;
 using Task = NationalInstruments.DAQmx.Task;
 using UsbDataReceiver.Extensions;
 
+var dev = new IODevice("Dev2", 8);
+
+var device1 = new MeasuredDevice("device1", new[]
+{
+    new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Voltage, dev, "Voltage"),
+    new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Ampere, dev, "Ampere"),
+    new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Temperature, dev, "Temperature")
+});
+var device2 = new MeasuredDevice("device2", new[]
+{
+    new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Voltage, dev, "Voltage"),
+    new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Ampere, dev, "Ampere"),
+    new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Temperature, dev, "Temperature")
+});
+
+
+while (true)
+{
+    var data = device1.Reader.ReadSingleSample();
+    if(data is null)
+    {
+        Console.WriteLine("data is null");
+        continue;
+    }
+    Console.Write($"{device1.ReadDataString(),-50}");
+    Console.WriteLine(device2.ReadDataString());
+}
+
+/*
 Task measureTask = new();
 
 //setup channels
@@ -41,4 +71,4 @@ while (true)
     Console.WriteLine($"volts: {data[0].Round(2),5:F2} ampere: {data[1].Round(2),5:F2} temperature: {data[2].Round(2),5:F2}");
     
 }
-
+*/

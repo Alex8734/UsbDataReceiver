@@ -1,5 +1,7 @@
 # UsbDataReceiver
-To log the Temperatue, Voltage and Ampere of multible sensores for the Transponders
+* To log the temperature, Voltage and Ampere of multiple sensors for the Transponders
 ## IODevice
-## MessuredDevice
-the Devise you want to messure Voltage, Ampere or Temperature
+* The input Device you want to use.
+* You can use multiple IODevices for one MeasuredDevice
+## MeasuredDevice
+* the Devise you want to measure Voltage, Ampere or Temperature
