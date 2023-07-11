@@ -3,32 +3,40 @@
 public class Logger
 {
     public string LogFilePath { get; }
-    public int LogInterval { get; set; }
     public MeasuredDevice Device { get; }
-    public StreamWriter? Writer { get; private set; } = null;
-    private Task? _logTask = null;
-    public Logger(MeasuredDevice device, string logPath, int interval)
+    private StreamWriter? _writer;
+    public string LogName { get; }
+    public Logger(MeasuredDevice device, string logPath, string logName)
     {
         Device = device;
-        LogInterval = interval;
         var currentTime = DateTime.Now;
         var currentDate = DateOnly.FromDateTime(currentTime);
-        LogFilePath = logPath + $"/{Device.Name}/{currentDate:yyyy-MM-dd}";
-        if(Path.Exists(logPath + $"/{Device.Name}"))
-            Directory.CreateDirectory(logPath + $"/{Device.Name}");
-    }
-    
-    public void Start()
-    {
-        Writer = new StreamWriter(LogFilePath, true);
-        _logTask = new Task(LogLoop);
-    }
-    private void LogLoop()
-    {
-        while (Writer != null)
+        LogName = logName;
+        LogFilePath = logPath + $"/{Device.Name}/{currentDate:yyyy-MM-dd}-{LogName}.csv";
+        if(!Path.Exists(logPath + $"/{Device.Name}"))
         {
-            Writer.WriteLine(Device.ReadDataString());
-            Thread.Sleep(LogInterval);
-        }   
+            Directory.CreateDirectory(logPath + $"/{Device.Name}");
+        }
+        _writer = new StreamWriter(LogFilePath, true);
+        Console.WriteLine($"Start Logging Device {Device.Name} in File {LogFilePath}");
+    }
+
+    public bool Stop()
+    {
+        if(_writer is null) return false;
+        _writer.Close();
+        _writer = null;
+        return true;
+    }
+
+    public void Log()
+    {
+        if(_writer == null)
+        {
+            Console.WriteLine("_writer is null");
+            return;
+        }
+        _writer.WriteLine($"{DateTime.UtcNow}: {Device.GetDataAsString()}");
+        Console.WriteLine($"wrote --> {DateTime.UtcNow}: {Device.GetDataAsString()} ---> in File: {LogFilePath.Split("net7.0/")[^1]}");
     }
 }

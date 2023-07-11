@@ -3,43 +3,46 @@
 public class LoggerManager
 {
     public string LogPath { get; set; }
-    public string LogName { get; }
-    private Dictionary<string,StreamWriter> _writers = new();
-    
-    public LoggerManager(string logPath, string logName)
+    private readonly List<Logger> _loggerList = new();
+    public int Interval { get; }
+    public string LogName { get;  }
+    public bool IsLogging => _loggerList.Count > 0;
+    private Thread _logThread;
+    public LoggerManager(string logPath, string logName, int interval = 2000)
     {
+        _logThread = new Thread(LogLoop);
         LogPath = logPath;
         LogName = logName;
+        Interval = interval;
     }
-    public void StartDevice(string deviceName)
+    public bool StartLoggingDevice(MeasuredDevice device)
     {
-        var currentTime = DateTime.Now;
-        var currentDate = DateOnly.FromDateTime(currentTime);
-        var filePath = LogPath + $"/{deviceName}/{LogName}{currentDate:yyyy-MM-dd}";
-        if(Path.Exists(LogPath + $"/{deviceName}"))
-            Directory.CreateDirectory(LogPath + $"/{deviceName}");
-        var writer = new StreamWriter(filePath, true);
-        _writers.Add(deviceName,writer);
+        var logger = new Logger(device, $"{LogPath}", LogName);
+        _loggerList.Add(logger);
+        if(_loggerList.Count == 1)
+        {
+            _logThread = new Thread(LogLoop);
+            _logThread.Start();
+        }
+        return true;
+    }
+    public bool StopLoggingDevice(string deviceName)
+    {
+        var logger = _loggerList.FirstOrDefault(l => l.Device.Name == deviceName);
+        return logger != null && logger.Stop() && _loggerList.Remove(logger);
+    }
 
-    }
-    public void StopDevice(string deviceName)
+    private void LogLoop()
     {
-        if (_writers.ContainsKey(deviceName))
+        Console.WriteLine("Starting Log Loop");
+        while (IsLogging)
         {
-            _writers[deviceName].Close();
-            _writers.Remove(deviceName);
+            for (int i = 0; i < _loggerList.Count; i++)
+            {
+                _loggerList[i].Log();
+                Thread.Sleep(Interval/ _loggerList.Count);
+            }
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
-    /// <param name="deviceName"></param>
-    private void LogLoop(string data, string deviceName)
-    {
-        if(_writers.TryGetValue(deviceName, out var writer))
-        {
-            writer.WriteLine(data);
-        }
-    }
+    
 }

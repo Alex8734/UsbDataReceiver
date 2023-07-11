@@ -28,6 +28,13 @@
       <Content Include="..\README.md">
         <Link>README.md</Link>
       </Content>
+      <Content Include="bin\Debug\net7.0\Data\device1\2023-07-06-v1.csv" />
+      <Content Include="bin\Debug\net7.0\Data\device1\2023-07-06.csv" />
+      <Content Include="bin\Debug\net7.0\Data\device1\2023-07-07-v1.csv" />
+      <Content Include="bin\Debug\net7.0\Data\device1\2023-07-11-v1.csv" />
+      <Content Include="bin\Debug\net7.0\Data\device2\2023-07-06-v1.csv" />
+      <Content Include="bin\Debug\net7.0\Data\device2\2023-07-06.csv" />
+      <Content Include="bin\Debug\net7.0\Data\device2\2023-07-07-v1.csv" />
     </ItemGroup>
 
 </Project>

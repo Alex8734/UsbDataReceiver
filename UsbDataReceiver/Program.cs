@@ -20,17 +20,11 @@ var device2 = new MeasuredDevice("device2", new[]
 });
 
 
-while (true)
-{
-    var data = device1.Reader.ReadSingleSample();
-    if(data is null)
-    {
-        Console.WriteLine("data is null");
-        continue;
-    }
-    Console.Write($"{device1.ReadDataString(),-50}");
-    Console.WriteLine(device2.ReadDataString());
-}
+var logManager = new LoggerManager(Environment.CurrentDirectory + "/Data", "v1",2000);
+
+logManager.StartLoggingDevice(device1);
+//logManager.StartLoggingDevice(device2);
+
 
 /*
 Task measureTask = new();
@@ -68,7 +62,7 @@ while (true)
         Console.WriteLine("data is null");
         continue;
     }
-    Console.WriteLine($"volts: {data[0].Round(2),5:F2} ampere: {data[1].Round(2),5:F2} temperature: {data[2].Round(2),5:F2}");
+    Console.WriteLine($"volts: {data[0].Round(2),5:F2} ampere: {data[1].Round(2),5:F2} temperature: {data[2],5}");
     
 }
 */

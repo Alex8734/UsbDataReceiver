@@ -8,36 +8,45 @@ namespace UsbDataReceiver;
 
 public class MeasuredDevice
 {
+    private DataManager _dataManager;
     public string Name { get; set; }
     public ReadOnlyCollection<PortDescription> Ports { get; }
     private readonly Task _measureTask = new();
-    public AnalogMultiChannelReader Reader { get; }
+    
+    private AnalogMultiChannelReader Reader { get; }
+    public Dictionary<string, double> Data { get; } = new();
+    
     public MeasuredDevice(string name, IEnumerable<PortDescription> ports)
     {
         Name = name;
+        _dataManager = new DataManager(this);
         Ports = ports.ToList().AsReadOnly();
         foreach (var port in Ports)
         {
             SetPortTask(port);
         }
         Reader = new AnalogMultiChannelReader(_measureTask.Stream);
+        
     }
+
+
     /// <summary>
-    ///     Read data from Devices ports
+    ///     Read data from directly from Devices ports
     /// </summary>
     /// <returns>Dictionary with Key = name of Data-Port</returns>
     /// <exception cref="DataException">if two ore more Data-Ports have same Name</exception>
     public Dictionary<string,double>? ReadData()
     {
+        if (Reader is null) return null;
         var rareData = Reader.ReadSingleSample();
         if (rareData is null) return null;
         var data = new Dictionary<string, double>();
         for (var i = 0; i < Ports.Count; i++)
         {
             if(data.ContainsKey(Ports[i].Name)) throw new DataException($"data already contains key name {Ports[i].Name}");
-            data.Add(Ports[i].Name, rareData[i]);
+            
+            data.Add(Ports[i].Name, rareData[i].CalculateToType(Ports[i].Type));
         }
-
         return data;
     }
     /// <summary>
@@ -46,11 +55,9 @@ public class MeasuredDevice
     /// <param name="decimalPlaces">digits after comma</param>
     /// <returns>data as string: "<see cref="MeasurementType"/>:xxx,xx;<see cref="MeasurementType"/>:xxx,xx"</returns>
     /// <exception cref="DataException">if ReadSingleSample failed</exception>
-    public string ReadDataString(int decimalPlaces = 2)
+    public string GetDataAsString(int decimalPlaces = 2)
     {
-        var data = ReadData();
-        if (data is null) throw new DataException("error by reading data");
-        return string.Join(";", data.Select(d => $"{d.Key}:{d.Value.Round(decimalPlaces)}"));
+        return string.Join(";", Data.Select(d => $"{d.Key}:{d.Value.Round(decimalPlaces)}"));
     }
     
     private AIChannel? SetPortTask(PortDescription port)
