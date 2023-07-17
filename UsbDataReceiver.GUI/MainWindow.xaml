@@ -3,16 +3,160 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:UsbDataReceiver.GUI"
+        xmlns:viewModel="clr-namespace:UsbDataReceiver.GUI.MVVM.ViewModel"
         mc:Ignorable="d"
         Background="#36393F"
         WindowStyle="None"
         AllowsTransparency="True"
         ResizeMode="CanResizeWithGrip"
-        Title="NI Data Receiver" Height="450" Width="800">
-    
+        Title="NI Data Logger" Height="650" Width="1200">
+        
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
     
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Border Grid.ColumnSpan="2"
+                Background="#252525"
+                MouseDown="Border_OnMouseDown">
+            
+            <Grid HorizontalAlignment="Stretch"
+                  Margin="2,2,2,2">
+                <Label Content="NI Data Receiver"
+                       Foreground="Gray"
+                       FontWeight="SemiBold">
+                    
+                </Label>
+                <StackPanel HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                    
+                    <Button Width="20" Height="20"
+                            Margin="0,0,0,3"
+                            Content="🗕"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="Gray"
+                            FontWeight="Bold"
+                            Click="ButtonMinimize_Click">
+                    </Button>
+                    <Button Width="20" Height="20"
+                            Content="▢"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="Gray"
+                            FontWeight="Bold"
+                            Click="WindowStateButton_Click">
+                    </Button>
+                    <Button Width="20" Height="20"
+                            Content="✕"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="Gray"
+                            FontWeight="Bold"
+                            Click="CloseButton_Click">
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Grid Background="#2F3136" 
+              Grid.Row="1" Grid.Column="0"
+              Loaded="Sidebar_OnLoaded">
+            <Grid.RowDefinitions>
+                <RowDefinition MaxHeight="50" />
+                <RowDefinition MinHeight="0" Height="Auto"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition MinHeight="0" Height="Auto"/>
+                <RowDefinition Height="50" />
+                <RowDefinition MinHeight="0" Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" 
+                    BorderThickness="0,0,0,.3"
+                    BorderBrush="LightGray"
+                    Margin="8,0,8,0"
+                    Height="40">
+                <StackPanel HorizontalAlignment="Left"
+                            Orientation="Horizontal">
+                    <Label Content="IO Devices"
+                           Width="160"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontWeight="Medium"
+                           Foreground="Gray"/>
+                    <Button Background="Transparent"
+                            Content="🗘"
+                            BorderThickness=".6"
+                            Foreground="Gray"
+                            FontSize="15"
+                            Height="24"
+                            Width="24"
+                            Click="RefreshIODevices_Click"/>
+                </StackPanel>
+            </Border>
+            <StackPanel x:Name="IoDeviceList" Grid.Row="1" HorizontalAlignment="Center"
+                        Orientation="Vertical">
+                <Label Content="No IO Devices"/>
+            </StackPanel>
+            <Border Grid.Row="2" 
+                    BorderThickness="0,0,0,.3"
+                    BorderBrush="LightGray"
+                    Margin="8,0,8,0"
+                    Height="40">
+                <StackPanel HorizontalAlignment="Left"
+                            Orientation="Horizontal">
+                    <Label Content="Devices"
+                           Width="160"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontWeight="Medium"
+                           Foreground="Gray"/>
+                    <Button Background="Transparent"
+                            Content="＋"
+                            BorderThickness=".6"
+                            Foreground="Gray"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            Height="24"
+                            Width="24"
+                            Command="{Binding AddDeviceCommand}"/>
+                </StackPanel>
+            </Border>
+            <StackPanel x:Name="DeviceList" Grid.Row="3" HorizontalAlignment="Center"
+                        Orientation="Vertical">
+                    <Label Content="No Devices"/>
+            </StackPanel>
+            <Border Grid.Row="4" 
+                    BorderThickness="0,0,0,.3"
+                    BorderBrush="LightGray"
+                    Margin="8,0,8,0"
+                    Height="40">
+                <StackPanel HorizontalAlignment="Left"
+                            Orientation="Horizontal">
+                    <Label Content="Logs"
+                           Width="160"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontWeight="Medium"
+                           Foreground="Gray"/>
+                    
+                </StackPanel>
+            </Border>
+            <StackPanel x:Name="LogList" Grid.Row="5" HorizontalAlignment="Center"
+                        Orientation="Vertical">
+                <Label Content="No Logs"/>
+            </StackPanel>
+        </Grid>
+        <ContentControl Grid.Row="1" Grid.Column="1"
+                        Margin="10"
+                        Content="{Binding CurrentView}">
+        </ContentControl>
     </Grid>
 </Window>

@@ -2,18 +2,29 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net7.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
+        <TargetFramework>net7.0-windows</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Core\" />
       <Folder Include="Icons\" />
       <Folder Include="MVVM\Model\" />
-      <Folder Include="MVVM\ViewModel\" />
-      <Folder Include="MVVM\View\" />
       <Folder Include="Themes\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\UsbDataReceiver\UsbDataReceiver.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="NationalInstruments.DAQmx">
+        <HintPath>..\UsbDataReceiver\src\libs\NationalInstruments.DAQmx.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="InteractiveDataDisplay.WPF" Version="1.0.0" />
     </ItemGroup>
 
 </Project>

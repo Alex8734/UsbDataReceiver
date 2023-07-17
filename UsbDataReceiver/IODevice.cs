@@ -1,4 +1,5 @@
-﻿
+﻿using NationalInstruments.DAQmx;
+using NationalInstruments;
 namespace UsbDataReceiver;
 
 // ReSharper disable once InconsistentNaming
@@ -22,5 +23,10 @@ public class IODevice
         var port = AvailablePorts.First();
         AvailablePorts.Remove(port);
         return port;
+    }
+    public static List<Device>? GetConnectedDevices()
+    {
+        var devices = DaqSystem.Local.Devices;
+        return devices?.Select(d =>DaqSystem.Local.LoadDevice(d)).ToList();
     }
 }

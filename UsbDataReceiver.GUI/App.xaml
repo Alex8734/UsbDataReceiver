@@ -2,8 +2,21 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:UsbDataReceiver.GUI"
+             xmlns:viewModel="clr-namespace:UsbDataReceiver.GUI.MVVM.ViewModel"
+             xmlns:view="clr-namespace:UsbDataReceiver.GUI.MVVM.View"
+             xmlns:wpf="clr-namespace:InteractiveDataDisplay.WPF;assembly=InteractiveDataDisplay.WPF"
+             xmlns:core="clr-namespace:UsbDataReceiver.GUI.Core"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+         <ResourceDictionary>
+             <core:VisibilityToCheckedConverter x:Key="VisibilityToCheckedConverter"/>
+             <core:LegendItemVisibilityToVisibilityConverter x:Key="LegendItemVisibilityToVisibilityConverter"/>
+             <DataTemplate DataType="{x:Type viewModel:AddDeviceViewModel}">
+                 <view:AddDeviceView/>
+             </DataTemplate>
+             <DataTemplate DataType="{x:Type viewModel:DataDisplayViewModel}">
+                 <view:DataDisplayView/>
+             </DataTemplate>
+         </ResourceDictionary>
     </Application.Resources>
 </Application>
