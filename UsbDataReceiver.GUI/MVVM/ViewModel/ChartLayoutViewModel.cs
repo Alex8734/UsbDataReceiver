@@ -40,9 +40,8 @@ public class ChartLayoutViewModel : ObservableObject
         foreach (var (key,value) in data)
         {
             if(!Lines.TryGetValue(key, out var line)) continue;
-            //line.LineChart.Points.Add(new(line.HoursTicked, value));
+            line.LineChart.Points.Add(new(line.HoursTicked, value));
         }
-        OnPropertyChanged();
     }
 }
 
