@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using NationalInstruments.DAQmx;
+using UsbDataReceiver.GUI.MVVM.Model;
 using UsbDataReceiver.GUI.MVVM.View;
 using UsbDataReceiver.GUI.MVVM.ViewModel;
 using UsbDataReceiver.Log;
@@ -59,7 +60,31 @@ namespace UsbDataReceiver.GUI
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+            DataManager.IsUpdating = false;
+            LogManager.DisposeAll();
+            
         }
+
+        private void DisplayTransponders()
+        {
+            var vm = DataContext as MainViewModel;
+            if (vm != null) return;
+            DeviceList.Children.Clear();
+            if (vm == null || vm.Devices.Count == 0)
+            {
+                IoDeviceList.Children.Add(new Label()
+                {
+                    Content = "No Transponders"
+                });
+                return;
+            }
+
+            foreach (var device in vm.Devices)
+            {
+                DeviceList.Children.Add(new DeviceDisplayModel(device));
+            }
+        }
+
         private void DisplayDevices()
         {
             var devices = IODevice.GetConnectedDevices();
@@ -91,12 +116,6 @@ namespace UsbDataReceiver.GUI
         private void RefreshIODevices_Click(object sender, RoutedEventArgs e)
         {
             DisplayDevices();
-        }
-
-        private void AddDeviceButton_Click(object sender, RoutedEventArgs e)
-        {
-            var mainViewModel = (MainViewModel)DataContext;
-            mainViewModel.CurrentView = mainViewModel.AddDeviceVM;
         }
     }
 }

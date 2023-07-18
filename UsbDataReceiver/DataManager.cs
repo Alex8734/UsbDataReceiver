@@ -53,7 +53,6 @@ public class DataManager
                 {
                     UpdateValue(key, value, DataDevices[i].Data, data);
                 }
-                
                 Thread.Sleep( DataDevices.Count != 0 ? UpdateInterval/DataDevices.Count : UpdateInterval);   
             }
         }

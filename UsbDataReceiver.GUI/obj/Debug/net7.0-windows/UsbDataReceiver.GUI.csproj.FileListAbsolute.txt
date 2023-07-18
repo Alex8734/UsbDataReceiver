@@ -43,3 +43,6 @@ C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\bin\Debug\net7.0
 C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\bin\Debug\net7.0-windows\System.Runtime.InteropServices.WindowsRuntime.dll
 C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\MVVM\View\ChartLayout.g.cs
 C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\MVVM\View\ChartLayout.baml
+C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\MVVM\View\ChartDeviceView.g.cs
+C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\MVVM\View\ChartDeviceView.baml
+C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\Themes\NameBox.baml

@@ -9,8 +9,25 @@
              Background="Transparent"
              BorderThickness="0">
     <Grid>
-        <Label Content="AddDevice"
-               FontSize="200"
-               Foreground="Blue"></Label>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="105"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="395"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <TextBox Grid.Column="1" 
+                 Height="34"
+                 Width="220"
+                 Text="New Device"
+                 Style="{StaticResource NameBox}">
+        </TextBox>
+        <StackPanel Grid.Row="1" Grid.Column="1" >
+            
+        </StackPanel>
+
     </Grid>
-</UserControl>
+</UserControl> 

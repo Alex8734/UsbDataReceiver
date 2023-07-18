@@ -9,14 +9,15 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          <ResourceDictionary>
-             <core:VisibilityToCheckedConverter x:Key="VisibilityToCheckedConverter"/>
-             <core:LegendItemVisibilityToVisibilityConverter x:Key="LegendItemVisibilityToVisibilityConverter"/>
              <DataTemplate DataType="{x:Type viewModel:AddDeviceViewModel}">
                  <view:AddDeviceView/>
              </DataTemplate>
              <DataTemplate DataType="{x:Type viewModel:DataDisplayViewModel}">
                  <view:DataDisplayView/>
              </DataTemplate>
+             <ResourceDictionary.MergedDictionaries>
+                 <ResourceDictionary Source="./Themes/NameBox.xaml"/>
+             </ResourceDictionary.MergedDictionaries>
          </ResourceDictionary>
     </Application.Resources>
 </Application>

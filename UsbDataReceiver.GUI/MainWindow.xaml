@@ -85,7 +85,7 @@
                     Height="40">
                 <StackPanel HorizontalAlignment="Left"
                             Orientation="Horizontal">
-                    <Label Content="IO Devices"
+                    <Label Content="NI Devices"
                            Width="160"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
@@ -112,7 +112,7 @@
                     Height="40">
                 <StackPanel HorizontalAlignment="Left"
                             Orientation="Horizontal">
-                    <Label Content="Devices"
+                    <Label Content="Transponder"
                            Width="160"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Left"
@@ -131,7 +131,7 @@
             </Border>
             <StackPanel x:Name="DeviceList" Grid.Row="3" HorizontalAlignment="Center"
                         Orientation="Vertical">
-                    <Label Content="No Devices"/>
+                <Label Content="No Devices"/>
             </StackPanel>
             <Border Grid.Row="4" 
                     BorderThickness="0,0,0,.3"
@@ -146,7 +146,6 @@
                            HorizontalAlignment="Left"
                            FontWeight="Medium"
                            Foreground="Gray"/>
-                    
                 </StackPanel>
             </Border>
             <StackPanel x:Name="LogList" Grid.Row="5" HorizontalAlignment="Center"

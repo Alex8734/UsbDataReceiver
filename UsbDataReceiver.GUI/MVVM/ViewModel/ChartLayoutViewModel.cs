@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Media;
+using System.Windows.Threading;
 using InteractiveDataDisplay.WPF;
 using UsbDataReceiver.GUI.Core;
 
@@ -10,10 +15,8 @@ namespace UsbDataReceiver.GUI.MVVM.ViewModel;
 
 public class ChartLayoutViewModel : ObservableObject
 {
-    public static Stack<SolidColorBrush> Strokes = new();
-
+    public static readonly Stack<SolidColorBrush> Strokes = new();
     public Dictionary<string, Line> Lines { get; }
-
     public IEnumerable<LineGraph> LineGraphs => Lines.Values
         .Select(l => l.LineChart);
 
@@ -33,6 +36,8 @@ public class ChartLayoutViewModel : ObservableObject
             Strokes.Pop();
         }
         Lines.Add(name,new(name, Strokes.Peek()));
+        Lines[name].LineChart.Plot(new[]{Lines[name].HoursTicked},new[]{0});
+        Lines[name].LineChart.Visibility = Visibility.Visible;
         OnPropertyChanged();
     }
     public void UpdateData(Dictionary<string,double> data)
@@ -41,7 +46,9 @@ public class ChartLayoutViewModel : ObservableObject
         {
             if(!Lines.TryGetValue(key, out var line)) continue;
             line.LineChart.Points.Add(new(line.HoursTicked, value));
+            line.LineChart.UpdateLayout();
         }
+        OnPropertyChanged(nameof(LineGraphs));
     }
 }
 
@@ -60,13 +67,14 @@ public class Line
         LineChart = new LineGraph
         {
             Stroke = key.Contains("Max") 
-                ? GetDarkerColor(stroke, 0.5) 
+                ? GetDarkerColor(stroke, 1) 
                 : key.Contains("Min") 
-                    ? GetLighterColor(stroke, 0.5) 
+                    ? GetLighterColor(stroke, 1) 
                     : stroke,
             Description = key,
             StrokeThickness = 2,
-            IsManipulationEnabled = true
+            IsManipulationEnabled = true,
+            Visibility = Visibility.Visible,
         };
 
         StartedAt = DateTime.Now;
@@ -76,7 +84,7 @@ public class Line
     public LineGraph LineChart { get; set; }
     public DateTime StartedAt { get; set; }
     public bool LegendVisibility { get; set; }
-    public double HoursTicked => (StartedAt-DateTime.Now).Hours;
+    public double HoursTicked => (DateTime.Now-StartedAt).TotalMinutes;
     
     public SolidColorBrush GetDarkerColor(SolidColorBrush brush, double factor)
     {

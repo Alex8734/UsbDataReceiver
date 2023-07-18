@@ -19,10 +19,7 @@ var device2 = new MeasuredDevice("device2", new[]
     new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Temperature, dev, "Temperature")
 });
 
-
-var logManager = new LoggerManager(Environment.CurrentDirectory + "/Data", "v1",2000);
-
-logManager.StartLoggingDevice(device1);
+LogManager.StartLoggingDevice(device1);
 //logManager.StartLoggingDevice(device2);
 
 

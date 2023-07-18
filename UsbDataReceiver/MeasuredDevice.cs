@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Data;
+using System.Linq.Expressions;
 using NationalInstruments.DAQmx;
 using UsbDataReceiver.Extensions;
 using Task = NationalInstruments.DAQmx.Task;
@@ -10,7 +11,7 @@ public class MeasuredDevice
 {
     private DataManager _dataManager;
     public string Name { get; set; }
-    public ReadOnlyCollection<PortDescription> Ports { get; }
+    public  IReadOnlyCollection<PortDescription> Ports { get; }
     private readonly Task _measureTask = new();
     
     private AnalogMultiChannelReader Reader { get; }
@@ -43,9 +44,9 @@ public class MeasuredDevice
         var data = new Dictionary<string, double>();
         for (var i = 0; i < Ports.Count; i++)
         {
-            if(data.ContainsKey(Ports[i].Name)) throw new DataException($"data already contains key name {Ports[i].Name}");
+            if(data.ContainsKey(Ports.ElementAt(i).Name)) throw new DataException($"data already contains key name {Ports.ElementAt(i).Name}");
             
-            data.Add(Ports[i].Name, rareData[i].CalculateToType(Ports[i].Type));
+            data.Add(Ports.ElementAt(i).Name, rareData[i].CalculateToType(Ports.ElementAt(i).Type));
         }
         return data;
     }

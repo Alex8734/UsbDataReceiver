@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Threading;
 using InteractiveDataDisplay.WPF;
 using NationalInstruments.DAQmx;
 using UsbDataReceiver;
@@ -12,28 +14,51 @@ namespace UsbDataReceiver.GUI.MVVM.View;
 
 public partial class ChartLayout : UserControl
 {
-
+    private readonly DispatcherTimer _timer = new()
+    {
+        Interval = TimeSpan.FromMilliseconds(200)
+    };
     public ChartLayout(MeasuredDevice device)
     {
         InitializeComponent();
-        ((TextBlock)plotter.Title).Text = device.Name;
-        int i = 0;
-        var started = DateTime.Now;
-        foreach (var (key,value) in device.Data)
+
+        if (plotter.Title is TextBlock titleTextBlock)
         {
-            var line = new LineGraph
-            {
-                Stroke = Brushes.Red,
-                Description = key,
-                StrokeThickness = 2,
-            };
-            line.Plot(new[]{3,4},new[]{2,3});
-            lines.Children.Add(line);
-            line.Points.Add(new Point(10,10));
-            if(!key.Contains("Max") && !key.Contains("Min"))
-                i++;
+            titleTextBlock.Text = device.Name;
         }
+        var vm = DataContext as ChartLayoutViewModel;
+        if(vm is null) return;
+        while (device.Data.Count < 1)
+        {
+            //wait until Data is initialized
+            Thread.Sleep(10);
+        }
+        foreach (var (key,_) in device.Data)
+        {
+            vm.AddLine(key);
+        }
+
+        foreach (var graph in vm.LineGraphs)
+        {
+            lines.Children.Add(graph);
+        }
+
+        _timer.Tick += (sender, args) =>
+        {
+            vm.UpdateData(device.Data);
+        };
+        _timer.Start();
     }
-    
-    
+
+    private void ChartLayout_OnUnloaded(object sender, RoutedEventArgs e)
+    {
+        _timer.Stop();
+        
+    }
+
+    private void ChartLayout_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        _timer.Start();
+    }
 }
+

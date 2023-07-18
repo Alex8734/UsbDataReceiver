@@ -22,7 +22,9 @@ public class DataDisplayViewModel : ObservableObject
     
     public void AddDevice(MeasuredDevice device)
     {
-        Views.Add(new ChartLayout(device));
+        var chartLayout = new ChartLayout(device);
+        Views.Add(chartLayout);
+       
         OnPropertyChanged();
     }
 }
