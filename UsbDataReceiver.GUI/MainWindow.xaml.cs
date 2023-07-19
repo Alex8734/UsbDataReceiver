@@ -70,7 +70,7 @@ namespace UsbDataReceiver.GUI
             var vm = DataContext as MainViewModel;
             if (vm != null) return;
             DeviceList.Children.Clear();
-            if (vm == null || vm.Devices.Count == 0)
+            if (vm == null || MainViewModel.Devices.Count == 0)
             {
                 IoDeviceList.Children.Add(new Label()
                 {
@@ -79,7 +79,7 @@ namespace UsbDataReceiver.GUI
                 return;
             }
 
-            foreach (var device in vm.Devices)
+            foreach (var device in MainViewModel.Devices)
             {
                 DeviceList.Children.Add(new DeviceDisplayModel(device));
             }
@@ -106,6 +106,7 @@ namespace UsbDataReceiver.GUI
                     Foreground  = Brushes.Gray,
                     Content = $"{dev.DeviceID} - {dev.ProductType}{simulatedInfo}"
                 });
+                
             }
         }
         private void Sidebar_OnLoaded(object sender, RoutedEventArgs e)
@@ -116,6 +117,35 @@ namespace UsbDataReceiver.GUI
         private void RefreshIODevices_Click(object sender, RoutedEventArgs e)
         {
             DisplayDevices();
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            Button backButton = new Button
+            {
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+                Margin = new Thickness(10),
+                Background = Brushes.Transparent,
+                Content = "↩",
+                BorderThickness = new Thickness(0.6),
+                Foreground = Brushes.Gray,
+                FontSize = 13,
+                FontWeight = FontWeights.Light,
+                Height = 40,
+                Width = 40,
+            };
+            backButton.Click += (o, args) =>
+            {
+                if(DataContext is MainViewModel vm)
+                {
+                    vm.CurrentView = vm.DataDisplayVM;
+                }
+                WindowLayout.Children.Remove(backButton);
+            };
+            Grid.SetRow(backButton,1);
+            Grid.SetColumn(backButton,1);
+            WindowLayout.Children.Add(backButton);
         }
     }
 }

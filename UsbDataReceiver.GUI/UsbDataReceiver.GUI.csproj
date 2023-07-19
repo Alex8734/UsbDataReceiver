@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>WinExe</OutputType>
+        <OutputType>Exe</OutputType>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
         <TargetFramework>net7.0-windows</TargetFramework>
@@ -23,6 +23,16 @@
 
     <ItemGroup>
       <PackageReference Include="InteractiveDataDisplay.WPF" Version="1.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="bin\Debug\net7.0-windows\Data\device1\2023-07-14-v1.csv" />
+      <Content Include="bin\Debug\net7.0-windows\Data\device1\2023-07-17-v1.csv" />
+      <Content Include="bin\Debug\net7.0-windows\Data\device1\2023-07-18-v1.csv" />
+      <Content Include="bin\Debug\net7.0-windows\Data\device2\2023-07-17-v1.csv" />
+      <Content Include="bin\Debug\net7.0-windows\Data\device2\2023-07-18-v1.csv" />
+      <Content Include="bin\Debug\net7.0-windows\Data\device3\2023-07-17-v1.csv" />
+      <Content Include="bin\Debug\net7.0-windows\Data\device3\2023-07-18-v1.csv" />
     </ItemGroup>
 
 </Project>

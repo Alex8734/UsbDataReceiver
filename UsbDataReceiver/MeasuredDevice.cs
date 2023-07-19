@@ -58,7 +58,7 @@ public class MeasuredDevice
     /// <exception cref="DataException">if ReadSingleSample failed</exception>
     public string GetDataAsString(int decimalPlaces = 2)
     {
-        return string.Join(";", Data.Select(d => $"{d.Key}:{d.Value.Round(decimalPlaces)}"));
+        return string.Join(";", Data.Select(d => $"{d.Value.Round(decimalPlaces)}"));
     }
     
     private AIChannel? SetPortTask(PortDescription port)

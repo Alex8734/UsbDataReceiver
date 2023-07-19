@@ -3,19 +3,33 @@
 public class Logger
 {
     public string LogFilePath { get; }
+    public string LogFileDir { get; }
     public MeasuredDevice Device { get; }
     private StreamWriter? _writer;
-    public string LogName { get; }
-    public Logger(MeasuredDevice device, string logPath, string logName)
+    public string LogDetails { get; }
+    public Logger(MeasuredDevice device, string logPath, string logDetails)
     {
         Device = device;
         var currentTime = DateTime.Now;
         var currentDate = DateOnly.FromDateTime(currentTime);
-        LogName = logName;
-        LogFilePath = logPath + $"/{Device.Name}/{currentDate:yyyy-MM-dd}-{LogName}.csv";
-        if(!Path.Exists(logPath + $"/{Device.Name}"))
+        
+        LogDetails = logDetails;
+        LogFileDir = $"{logPath}/{Device.Name}";
+
+        LogFilePath = $"{LogFileDir}/{currentDate:yyyy-MM-dd}-{LogDetails}.csv";
+        
+        if(!Path.Exists(LogFileDir))
         {
-            Directory.CreateDirectory(logPath + $"/{Device.Name}");
+            Directory.CreateDirectory(LogFileDir);
+        }
+
+        if (!File.Exists(LogFilePath))
+        {
+            var header = new[]
+            {
+                $"#{string.Join(";",device.Ports.Select(p => p.Type.ToString()))}"
+            };
+            File.WriteAllLines(LogFilePath,header);
         }
         _writer = new StreamWriter(LogFilePath, true);
         Console.WriteLine($"Start Logging Device {Device.Name} in File {LogFilePath}");
@@ -37,6 +51,6 @@ public class Logger
             return;
         }
         _writer.WriteLine($"{DateTime.UtcNow}: {Device.GetDataAsString()}");
-        Console.WriteLine($"wrote --> {DateTime.UtcNow}: {Device.GetDataAsString()} ---> in File: {LogFilePath.Split("net7.0/")[^1]}");
+        //Console.WriteLine($"wrote --> {DateTime.UtcNow}: {Device.GetDataAsString()} ---> in File: {LogFilePath.Split("net7.0/")[^1]}");
     }
 }

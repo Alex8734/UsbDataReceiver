@@ -9,6 +9,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          <ResourceDictionary>
+            <core:StringToComboboxItemConverter x:Key="StringToComboboxItemConverter"/>
              <DataTemplate DataType="{x:Type viewModel:AddDeviceViewModel}">
                  <view:AddDeviceView/>
              </DataTemplate>
@@ -17,6 +18,7 @@
              </DataTemplate>
              <ResourceDictionary.MergedDictionaries>
                  <ResourceDictionary Source="./Themes/NameBox.xaml"/>
+                 <ResourceDictionary Source="./Themes/PortForm.xaml"/>
              </ResourceDictionary.MergedDictionaries>
          </ResourceDictionary>
     </Application.Resources>

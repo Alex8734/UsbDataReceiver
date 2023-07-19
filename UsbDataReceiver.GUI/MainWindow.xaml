@@ -15,7 +15,7 @@
         <viewModel:MainViewModel/>
     </Window.DataContext>
     
-    <Grid>
+    <Grid x:Name="WindowLayout">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition/>
@@ -126,7 +126,8 @@
                             FontWeight="Bold"
                             Height="24"
                             Width="24"
-                            Command="{Binding AddDeviceCommand}"/>
+                            Command="{Binding AddDeviceCommand}"
+                            Click="ButtonBase_OnClick"/>
                 </StackPanel>
             </Border>
             <StackPanel x:Name="DeviceList" Grid.Row="3" HorizontalAlignment="Center"
@@ -153,6 +154,7 @@
                 <Label Content="No Logs"/>
             </StackPanel>
         </Grid>
+        
         <ContentControl Grid.Row="1" Grid.Column="1"
                         Margin="10"
                         Content="{Binding CurrentView}">
