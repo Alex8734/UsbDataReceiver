@@ -16,7 +16,7 @@ public partial class DataDisplayView : UserControl
     {
         InitializeComponent();
         
-        var dev = new IODevice("Dev2", 8);
+        /*var dev = new IODevice("Dev2", 8);
 
         var device1 = new MeasuredDevice("device1", new[]
         {
@@ -44,6 +44,6 @@ public partial class DataDisplayView : UserControl
         vm.AddDevice(device1);
         vm.AddDevice(device2);
         vm.AddDevice(device3);
-        Console.WriteLine();
+        Console.WriteLine();*/
     }
 }
