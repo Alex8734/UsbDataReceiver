@@ -3,9 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:d3="clr-namespace:InteractiveDataDisplay;assembly=InteractiveDataDisplay.WPF"
-             xmlns:local="clr-namespace:UsbDataReceiver.GUI.MVVM.View"
-             xmlns:wpf="clr-namespace:InteractiveDataDisplay.WPF;assembly=InteractiveDataDisplay.WPF"
              xmlns:viewModel="clr-namespace:UsbDataReceiver.GUI.MVVM.ViewModel"
              mc:Ignorable="d"
              d:DesignHeight="620" d:DesignWidth="1000">

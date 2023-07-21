@@ -56,7 +56,7 @@ public class MeasuredDevice
     /// <param name="decimalPlaces">digits after comma</param>
     /// <returns>data as string: "<see cref="MeasurementType"/>:xxx,xx;<see cref="MeasurementType"/>:xxx,xx"</returns>
     /// <exception cref="DataException">if ReadSingleSample failed</exception>
-    public string GetDataAsString(int decimalPlaces = 2)
+    public string GetDataAsString(int decimalPlaces = 10)
     {
         return string.Join(";", Data.Select(d => $"{d.Value.Round(decimalPlaces)}"));
     }

@@ -4,8 +4,8 @@ public static class LogManager
 {
     public static string LogPath { get; set; } = Environment.CurrentDirectory + "/Data";
     private static readonly List<Logger> _loggerList = new();
-    public static int Interval { get; } = 2000;
-    public static string LogName { get; } = "v1";
+    public static int Interval { get; set; } = 2000;
+    public static string LogName { get; set; }
     public static bool IsLogging
     {
         get => _loggerList.Count > 0;
@@ -37,14 +37,14 @@ public static class LogManager
         }
     }
 
-    private static void LogLoop()
+    private static async void LogLoop()
     {
         Console.WriteLine("Starting Log Loop");
         while (IsLogging)
         {
             for (int i = 0; i < _loggerList.Count; i++)
             {
-                _loggerList[i].Log();
+                await _loggerList[i].Log();
                 Thread.Sleep(Interval/ _loggerList.Count);
             }
         }

@@ -102,8 +102,8 @@
                 </StackPanel>
             </Border>
             <StackPanel x:Name="IoDeviceList" Grid.Row="1" HorizontalAlignment="Center"
-                        Orientation="Vertical">
-                <Label Content="No IO Devices"/>
+                        Orientation="Vertical" >
+                <Label>No Ni Devices</Label>
             </StackPanel>
             <Border Grid.Row="2" 
                     BorderThickness="0,0,0,.3"
@@ -130,10 +130,9 @@
                             Click="ButtonBase_OnClick"/>
                 </StackPanel>
             </Border>
-            <StackPanel x:Name="DeviceList" Grid.Row="3" HorizontalAlignment="Center"
-                        Orientation="Vertical">
-                <Label Content="No Devices"/>
-            </StackPanel>
+            <!--ItemsControl x:Name="DeviceList" Grid.Row="3" HorizontalAlignment="Center"
+                        ItemsSource="{Binding DisplayDevices}">
+            </ItemsControl-->
             <Border Grid.Row="4" 
                     BorderThickness="0,0,0,.3"
                     BorderBrush="LightGray"
@@ -159,5 +158,19 @@
                         Margin="10"
                         Content="{Binding CurrentView}">
         </ContentControl>
+        <Button Grid.Column="1" Grid.Row="1" x:Name="BackButton"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="10"
+                Background="Transparent"
+                Content="↩"
+                Visibility="{Binding BackButtonVisibility}"
+                BorderThickness="0.6"
+                Foreground="Gray"
+                FontSize="13"
+                FontWeight="Light"
+                Height="40"
+                Width="40"
+                Command="{Binding BackButtonCommand}" />
     </Grid>
 </Window>

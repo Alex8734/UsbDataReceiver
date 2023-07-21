@@ -1,0 +1,69 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "UsbDataReceiver/1.0.0": {
+        "dependencies": {
+          "NI.Data": "2.0.10",
+          "NationalInstruments.Common": "19.1.40.49152",
+          "NationalInstruments.DAQmx": "23.3.45.49311"
+        },
+        "runtime": {
+          "UsbDataReceiver.dll": {}
+        }
+      },
+      "NI.Data/2.0.10": {
+        "runtime": {
+          "lib/net40/NI.Data.dll": {
+            "assemblyVersion": "2.0.10.0",
+            "fileVersion": "2.0.10.0"
+          }
+        }
+      },
+      "NationalInstruments.Common/19.1.40.49152": {
+        "runtime": {
+          "NationalInstruments.Common.dll": {
+            "assemblyVersion": "19.1.40.49152",
+            "fileVersion": "19.1.40.49152"
+          }
+        }
+      },
+      "NationalInstruments.DAQmx/23.3.45.49311": {
+        "runtime": {
+          "NationalInstruments.DAQmx.dll": {
+            "assemblyVersion": "23.3.45.49311",
+            "fileVersion": "23.3.45.49311"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "UsbDataReceiver/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NI.Data/2.0.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8s9R5IbJ3jT0bGfOZP8PFXZCiPNoe2QIs3hh1lGuwBUfeA4TrmUGGlDtwPkRpQkVZ2WAc9ysIKcsAU/LXhXvVg==",
+      "path": "ni.data/2.0.10",
+      "hashPath": "ni.data.2.0.10.nupkg.sha512"
+    },
+    "NationalInstruments.Common/19.1.40.49152": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NationalInstruments.DAQmx/23.3.45.49311": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

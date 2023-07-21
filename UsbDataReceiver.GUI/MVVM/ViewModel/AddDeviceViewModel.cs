@@ -7,13 +7,27 @@ using NationalInstruments.DAQmx;
 using UsbDataReceiver.GUI.Core;
 using UsbDataReceiver;
 using UsbDataReceiver.GUI.MVVM.View;
+using System.Collections.ObjectModel;
 
 namespace UsbDataReceiver.GUI.MVVM.ViewModel;
 
-public class AddDeviceViewModel
+public class AddDeviceViewModel : ObservableObject
 {
-    
-    public List<PortLayoutView> PortLayoutViews { get; set; }
+    public RelayCommand NameCommand => new((o) =>
+    {
+        Keyboard.ClearFocus();
+    });
+
+    private ObservableCollection<PortLayoutView> _portLayoutViews;
+    public ObservableCollection<PortLayoutView> PortLayoutViews
+    {
+        get => _portLayoutViews;
+        set
+        {
+            _portLayoutViews = value;
+            OnPropertyChanged(nameof(PortLayoutViews));
+        }
+    }
     private string _deviceName = string.Empty;
     public string DeviceName
     {
@@ -24,17 +38,22 @@ public class AddDeviceViewModel
             _deviceName = value;
         }
     }
-    public RelayCommand NameCommand { get; }
 
+    public void RemovePort(PortLayoutView port)
+    {
+        PortLayoutViews.Remove(port);
+        OnPropertyChanged();
+    }
     public AddDeviceViewModel()
     {
-        PortLayoutViews = new List<PortLayoutView>
-        {
-            new()
-        };
-        NameCommand = new RelayCommand(o =>
-        {
-            Keyboard.ClearFocus();
-        });
+        PortLayoutViews = new ObservableCollection<PortLayoutView>();
+    }
+
+    public PortLayoutView AddPort()
+    {
+        var port = new PortLayoutView();
+        PortLayoutViews.Add(port);
+        OnPropertyChanged(nameof(PortLayoutViews));
+        return port;
     }
 }

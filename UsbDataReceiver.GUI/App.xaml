@@ -16,6 +16,9 @@
              <DataTemplate DataType="{x:Type viewModel:DataDisplayViewModel}">
                  <view:DataDisplayView/>
              </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:AllDataDisplayViewModel}">
+                <view:DataDisplayView/>
+            </DataTemplate>
              <ResourceDictionary.MergedDictionaries>
                  <ResourceDictionary Source="./Themes/NameBox.xaml"/>
                  <ResourceDictionary Source="./Themes/PortForm.xaml"/>

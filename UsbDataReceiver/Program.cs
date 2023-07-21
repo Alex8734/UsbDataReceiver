@@ -4,27 +4,29 @@ using UsbDataReceiver.Log;
 using Task = NationalInstruments.DAQmx.Task;
 using UsbDataReceiver.Extensions;
 
+
 var dev = new IODevice("Dev2", 8);
 
-var device1 = new MeasuredDevice("device1", new[]
+var device1 = new MeasuredDevice("AmpereTest", new[]
 {
-    new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Voltage, dev, "Voltage"),
-    new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Ampere, dev, "Ampere"),
-    new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Temperature, dev, "Temperature")
-});
-var device2 = new MeasuredDevice("device2", new[]
-{
-    new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Voltage, dev, "Voltage"),
-    new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Ampere, dev, "Ampere"),
-    new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Temperature, dev, "Temperature")
+    new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Ampere, dev, "Ampere")
 });
 
+LogManager.LogName = "Test1";
+DataManager.UpdateInterval = 20;
 LogManager.StartLoggingDevice(device1);
+Thread.Sleep(1000);
+
+while(true)
+{
+    Console.WriteLine(string.Join("   ",device1.Data.Select(d => $"{d.Key}: {d.Value.Round(3)}")));
+}
+
 //logManager.StartLoggingDevice(device2);
 
+  //__Hardcoded_Variant__//
 
-/*
-Task measureTask = new();
+/*Task measureTask = new();
 
 //setup channels
 

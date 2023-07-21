@@ -13,18 +13,27 @@ namespace UsbDataReceiver.GUI.MVVM.ViewModel;
 
 public class DataDisplayViewModel : ObservableObject
 {
+    public ObservableCollection<ChartLayout> Views { get; }
 
-    public List<ChartLayout> Views { get; }
     public DataDisplayViewModel()
     {
-        Views = new List<ChartLayout>();
+        Views = new ObservableCollection<ChartLayout>();
     }
-    
-    public void AddDevice(MeasuredDevice device)
+
+    public void SetDevice(MeasuredDevice device)
     {
-        var chartLayout = new ChartLayout(device);
-        Views.Add(chartLayout);
-       
-        OnPropertyChanged();
+        if (Views.Count > 0)
+        {
+            Views.Clear();
+            OnPropertyChanged(nameof(Views));
+        }
+        foreach (var key in device.Data
+                     .Where(d => !d.Key.Contains("Max") && !d.Key.Contains("Min"))
+                     .Select(v => v.Key))
+        {
+            var chartLayout = new ChartLayout(device, key);
+            Views.Add(chartLayout);
+        }
+        OnPropertyChanged(nameof(Views));
     }
 }

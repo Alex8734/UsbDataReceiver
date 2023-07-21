@@ -25,9 +25,15 @@ public class Logger
 
         if (!File.Exists(LogFilePath))
         {
+            
+            while (device.Data.Count == 0)
+            {
+                //wait till device has data
+            }
+            
             var header = new[]
             {
-                $"#{string.Join(";",device.Ports.Select(p => p.Type.ToString()))}"
+                $"#Date_Time;{string.Join(";",device.Data.Select(p => p.Key.ToString()))}"
             };
             File.WriteAllLines(LogFilePath,header);
         }
@@ -43,14 +49,15 @@ public class Logger
         return true;
     }
 
-    public void Log()
+    public async Task Log()
     {
         if(_writer == null)
         {
             Console.WriteLine("_writer is null");
             return;
         }
-        _writer.WriteLine($"{DateTime.UtcNow}: {Device.GetDataAsString()}");
+        await _writer.WriteLineAsync($"{DateTime.Now};{Device.GetDataAsString()}");
+        
         //Console.WriteLine($"wrote --> {DateTime.UtcNow}: {Device.GetDataAsString()} ---> in File: {LogFilePath.Split("net7.0/")[^1]}");
     }
 }

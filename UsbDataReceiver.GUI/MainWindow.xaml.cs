@@ -31,8 +31,8 @@ namespace UsbDataReceiver.GUI
         public MainWindow()
         {
             InitializeComponent();
-            
-            
+            this.DataContext = new MainViewModel();
+            Console.WriteLine();
 
         }
 
@@ -65,27 +65,8 @@ namespace UsbDataReceiver.GUI
             
         }
 
-        private void DisplayTransponders()
-        {
-            var vm = DataContext as MainViewModel;
-            if (vm != null) return;
-            DeviceList.Children.Clear();
-            if (vm == null || MainViewModel.Devices.Count == 0)
-            {
-                IoDeviceList.Children.Add(new Label()
-                {
-                    Content = "No Transponders"
-                });
-                return;
-            }
 
-            foreach (var device in MainViewModel.Devices)
-            {
-                DeviceList.Children.Add(new DeviceDisplayModel(device));
-            }
-        }
-
-        private void DisplayDevices()
+        private void DisplayIoDevices()
         {
             var devices = IODevice.GetConnectedDevices();
             IoDeviceList.Children.Clear();
@@ -111,41 +92,19 @@ namespace UsbDataReceiver.GUI
         }
         private void Sidebar_OnLoaded(object sender, RoutedEventArgs e)
         {
-            DisplayDevices();
+            DisplayIoDevices();
         }
 
         private void RefreshIODevices_Click(object sender, RoutedEventArgs e)
         {
-            DisplayDevices();
+            DisplayIoDevices();
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            Button backButton = new Button
-            {
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-                Margin = new Thickness(10),
-                Background = Brushes.Transparent,
-                Content = "↩",
-                BorderThickness = new Thickness(0.6),
-                Foreground = Brushes.Gray,
-                FontSize = 13,
-                FontWeight = FontWeights.Light,
-                Height = 40,
-                Width = 40,
-            };
-            backButton.Click += (o, args) =>
-            {
-                if(DataContext is MainViewModel vm)
-                {
-                    vm.CurrentView = vm.DataDisplayVM;
-                }
-                WindowLayout.Children.Remove(backButton);
-            };
-            Grid.SetRow(backButton,1);
-            Grid.SetColumn(backButton,1);
-            WindowLayout.Children.Add(backButton);
+            if (DataContext is not MainViewModel vm) return;
+            vm.BackButtonVisibility = Visibility.Visible;
         }
+
     }
 }

@@ -10,28 +10,58 @@
     </UserControl.DataContext>
 
     <Grid>
-        <ItemsControl Style="{StaticResource PortForm}">
-            <Label>Name:</Label>
-            <TextBox Width="70"
-                     Height="30"></TextBox>
-            <Label>MeasurementType:</Label>
-            <ComboBox Width="70" 
-                      ItemsSource="{ Binding MeasurementTypes}"
-                      SelectedItem="{Binding Path=id}"
-                      IsSynchronizedWithCurrentItem="True"
-                      SelectedIndex="0"/>
-            <Label>NI Device:</Label>
-            <ComboBox x:Name="NiDeviceSelector" 
+        <ItemsControl Style="{StaticResource PortForm}" Margin="0,0,70,0">
+            <Button Width="30" 
+                    Background="Transparent" 
+                    Content="🞩" 
+                    Foreground="Red" 
+                    FontSize="20" 
+                    HorizontalAlignment="Right"
+                    Margin="0,0,15,0"
+                    Click="RemoveItem_OnClick"/>
+
+            <Label Foreground="Gray" FontSize="14">Name:</Label>
+            <TextBox x:Name="PortName"
+                     Foreground="White"
+                     MinWidth="90"
+                     MaxWidth="115"
+                     Height="30" 
+                     FontSize="17"
+                     Background="#FF3F3F3F"
+                     FontWeight="SemiBold"
+                     Text="{Binding PortName}"
+                     HorizontalContentAlignment="Center"
+                     VerticalContentAlignment="Center"/>
+            <Label Foreground="Gray" FontSize="14">MeasurementType:</Label>
+            <ComboBox x:Name="TypeSelector" 
                       Width="70" 
+                      VerticalContentAlignment="Center"
+                      HorizontalContentAlignment="Center"
+                      FontWeight="SemiBold"
+                      Background="Gray"
+                      ItemsSource="{Binding MeasurementTypes}"
+                      SelectedIndex="0"
+                      IsSynchronizedWithCurrentItem="True">
+            </ComboBox>
+            <Label Foreground="Gray" FontSize="14">NI Device:</Label>
+            <ComboBox x:Name="NiDeviceSelector"
+                      VerticalContentAlignment="Center"
+                      HorizontalContentAlignment="Center"
+                      Width="70" 
+                      FontWeight="SemiBold"
+                      Background="Gray"
                       ItemsSource="{Binding AvailableNiDeviceNames}"
                       SelectionChanged="NiDeviceSelector_OnSelectionChanged"
-                      SelectedItem="{Binding Path=id}"
                       IsSynchronizedWithCurrentItem="True"
-                      SelectedIndex="0"/>
-            <Label>Port:</Label>
-            <ComboBox x:Name="PortSelector" Width="70" 
+                      SelectedIndex="0">
+            </ComboBox>
+            <Label Foreground="Gray" FontSize="14">Port:</Label>
+            <ComboBox x:Name="PortSelector" Width="70"
+                      VerticalContentAlignment="Center"
+                      HorizontalContentAlignment="Center"
+                      FontWeight="SemiBold"
                       ItemsSource="{Binding PortsOfSelectedDevice}" 
-                      SelectedItem="{Binding Path=id}"
+                      SelectionChanged="PortSelector_OnSelectionChanged"
                       IsSynchronizedWithCurrentItem="True"
                       SelectedIndex="0"/>
         </ItemsControl>

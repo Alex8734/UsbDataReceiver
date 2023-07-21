@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -18,22 +19,32 @@ public partial class ChartLayout : UserControl
     {
         Interval = TimeSpan.FromMilliseconds(200)
     };
-    public ChartLayout(MeasuredDevice device)
+    /// <summary>
+    ///     Creates a Chart, that displays the given Values from The Device
+    /// </summary>
+    /// <param name="device">the measured Device</param>
+    /// <param name="measurePortKey">if you want to measure just a Port like (Voltage) with (MaxVoltage) and (MinVoltage) add just the (Voltage) key!</param>
+    public ChartLayout(MeasuredDevice device, string? measurePortKey = null)
     {
         InitializeComponent();
 
         if (plotter.Title is TextBlock titleTextBlock)
         {
-            titleTextBlock.Text = device.Name;
+            titleTextBlock.Text = measurePortKey ?? device.Name;
         }
-        var vm = DataContext as ChartLayoutViewModel;
-        if(vm is null) return;
-        while (device.Data.Count < 1)
+        if(DataContext is not ChartLayoutViewModel vm) return;
+        
+        var data = measurePortKey is null 
+            ? device.Data 
+            : device.Data.Where(d => d.Key.Contains(measurePortKey))
+                .ToDictionary(kv => kv.Key,kv => kv.Value);
+
+        while (data.Count < 1)
         {
             //wait until Data is initialized
             Thread.Sleep(10);
         }
-        foreach (var (key,_) in device.Data)
+        foreach (var (key,_) in data)
         {
             vm.AddLine(key);
         }
@@ -43,10 +54,7 @@ public partial class ChartLayout : UserControl
             lines.Children.Add(graph);
         }
 
-        _timer.Tick += (sender, args) =>
-        {
-            vm.UpdateData(device.Data);
-        };
+        _timer.Tick += (sender, args) => vm.UpdateData(data);
         _timer.Start();
     }
 
