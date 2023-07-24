@@ -53,8 +53,9 @@ public partial class AddDeviceView : UserControl
 
         var newDev = new MeasuredDevice(devName, ports);
         var main = this.FindParent<MainWindow>();
-        if(main is null || main.DataContext is not MainViewModel mainVm) return;
+        if(main?.DataContext is not MainViewModel mainVm) return;
         mainVm.AddDevice(newDev);
+        mainVm.CurrentView = mainVm.AllDataDisplayVM;
     }
 
     private void Placeholder_OnGotFocus(object sender, RoutedEventArgs e)

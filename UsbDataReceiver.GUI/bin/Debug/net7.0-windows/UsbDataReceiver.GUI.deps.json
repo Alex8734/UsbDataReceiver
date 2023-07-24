@@ -10,6 +10,7 @@
         "dependencies": {
           "InteractiveDataDisplay.WPF": "1.0.0",
           "UsbDataReceiver": "1.0.0",
+          "NationalInstruments.Common": "19.1.40.49152",
           "NationalInstruments.DAQmx": "23.3.45.49311"
         },
         "runtime": {
@@ -803,19 +804,19 @@
           "UsbDataReceiver.dll": {}
         }
       },
-      "NationalInstruments.DAQmx/23.3.45.49311": {
-        "runtime": {
-          "NationalInstruments.DAQmx.dll": {
-            "assemblyVersion": "23.3.45.49311",
-            "fileVersion": "23.3.45.49311"
-          }
-        }
-      },
       "NationalInstruments.Common/19.1.40.49152": {
         "runtime": {
           "NationalInstruments.Common.dll": {
             "assemblyVersion": "19.1.40.49152",
             "fileVersion": "19.1.40.49152"
+          }
+        }
+      },
+      "NationalInstruments.DAQmx/23.3.45.49311": {
+        "runtime": {
+          "NationalInstruments.DAQmx.dll": {
+            "assemblyVersion": "23.3.45.49311",
+            "fileVersion": "23.3.45.49311"
           }
         }
       }
@@ -1357,12 +1358,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "NationalInstruments.DAQmx/23.3.45.49311": {
+    "NationalInstruments.Common/19.1.40.49152": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
     },
-    "NationalInstruments.Common/19.1.40.49152": {
+    "NationalInstruments.DAQmx/23.3.45.49311": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

@@ -130,9 +130,9 @@
                             Click="ButtonBase_OnClick"/>
                 </StackPanel>
             </Border>
-            <!--ItemsControl x:Name="DeviceList" Grid.Row="3" HorizontalAlignment="Center"
+            <ItemsControl x:Name="DeviceList" Grid.Row="3" HorizontalAlignment="Center"
                         ItemsSource="{Binding DisplayDevices}">
-            </ItemsControl-->
+            </ItemsControl>
             <Border Grid.Row="4" 
                     BorderThickness="0,0,0,.3"
                     BorderBrush="LightGray"

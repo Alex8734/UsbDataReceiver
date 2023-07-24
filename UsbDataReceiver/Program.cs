@@ -19,7 +19,7 @@ Thread.Sleep(1000);
 
 while(true)
 {
-    Console.WriteLine(string.Join("   ",device1.Data.Select(d => $"{d.Key}: {d.Value.Round(3)}")));
+    Console.WriteLine(string.Join("   ",device1.Data.Select(d => $"{d.Key}: {d.Value:F3}")));
 }
 
 //logManager.StartLoggingDevice(device2);

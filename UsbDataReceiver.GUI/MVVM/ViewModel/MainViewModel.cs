@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
@@ -9,6 +10,7 @@ using UsbDataReceiver;
 using UsbDataReceiver.GUI.MVVM.Model;
 using System.Windows.Media;
 using System.Windows;
+using UsbDataReceiver.GUI.MVVM.View;
 
 namespace UsbDataReceiver.GUI.MVVM.ViewModel;
 
@@ -40,16 +42,36 @@ public class MainViewModel : ObservableObject
     {
         get
         {
-            UpdateDeviceList();
+            var connectedDevices = IODevice.GetConnectedDevices();
+            if (connectedDevices == null) return _ioDevices;
+            _ioDevices.UpdateList(connectedDevices, 
+                old => old.Name, 
+                newItem => newItem.DeviceID,
+                newItem => new IODevice(newItem.DeviceID, newItem.AIPhysicalChannels.Length));
             return _ioDevices;
         }
     }
 
-    public ObservableCollection<object> DisplayDevices 
-        = new (Devices.Count != 0 
-            ?  Devices.Select(d => new DeviceDisplayModel(d)) 
-            : new List<Label>{NoDevicesLabel} );
-    
+    public ObservableCollection<object> DisplayDevices
+    {
+        get
+        {
+            if(Devices.Count == 0) return new (new List<Label>{NoDevicesLabel});
+            var devices = Devices.Select(d => d.Name).ToList();
+            var newDevices = _ioDevices.Select(d => d.Name).ToList();
+            if(devices.Equals(newDevices)) return _displayDevices;
+            _displayDevices.UpdateList(Devices, 
+                old =>
+                {
+                    var dev = old as DeviceDisplayModel;
+                    return dev?.Name ?? "";
+                }, 
+                newItem => newItem.Name,
+                newItem => new DeviceDisplayModel(newItem));
+            return _displayDevices;
+        }
+    }
+
     public RelayCommand DataDisplayCommand { get; set; }
     public RelayCommand AddDeviceCommand { get; set; }
     public RelayCommand BackButtonCommand { get; set; }
@@ -59,6 +81,9 @@ public class MainViewModel : ObservableObject
     
     private object _currentView = null!;
     private Visibility _backButtonVisibility;
+    private readonly ObservableCollection<object> _displayDevices = new (Devices.Count != 0 
+        ?  Devices.Select(d => new DeviceDisplayModel(d)) 
+        : new List<Label>{NoDevicesLabel} );
 
     public object CurrentView
     {
@@ -71,30 +96,6 @@ public class MainViewModel : ObservableObject
         }
     }
 
-    public static void UpdateDeviceList()
-    {
-        var currentDevices = IODevice.GetConnectedDevices();
-        if (currentDevices == null)
-        {
-            return;
-        }
-
-        // Find names of devices that exist in the old list but not in the new list
-        var existingDeviceNames = _ioDevices.Select(device => device.Name);
-        var newDeviceNames = currentDevices.Select(device => device.DeviceID);
-
-        var namesToRemove = existingDeviceNames.Except(newDeviceNames).ToList();
-        var namesToAdd = newDeviceNames.Except(existingDeviceNames).ToList();
-
-        // Remove devices from the old list that don't exist in the new list.
-        _ioDevices.RemoveAll(device => namesToRemove.Contains(device.Name));
-
-        // Add new devices to the old list.
-        _ioDevices.AddRange(currentDevices
-            .Where(device => namesToAdd.Contains(device.DeviceID))
-            .Select(d => new IODevice(d.DeviceID,d.AIPhysicalChannels.Length)));
-    }
-
     public void AddDevice(MeasuredDevice device)
     {
         Devices.Add(device);
@@ -103,10 +104,13 @@ public class MainViewModel : ObservableObject
     }
     public MainViewModel()
     {
+        
         //init Views
+        AllDataDisplayVM = new AllDataDisplayViewModel();
         AddDeviceVM = new AddDeviceViewModel();
         //AllDataDisplayVM = new AllDataDisplayViewModel();
-        CurrentView = AddDeviceVM;
+        
+        CurrentView = AllDataDisplayVM;
         BackButtonVisibility = Visibility.Hidden;
         
         //init Commands
@@ -121,7 +125,7 @@ public class MainViewModel : ObservableObject
         
         BackButtonCommand = new RelayCommand(o =>
         {
-            //CurrentView = AllDataDisplayVM;
+            CurrentView = AllDataDisplayVM;
             BackButtonVisibility = Visibility.Hidden;
         });
 

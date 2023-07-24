@@ -16,6 +16,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Reference Include="NationalInstruments.Common">
+        <HintPath>..\UsbDataReceiver\src\libs\NationalInstruments.Common.dll</HintPath>
+      </Reference>
       <Reference Include="NationalInstruments.DAQmx">
         <HintPath>..\UsbDataReceiver\src\libs\NationalInstruments.DAQmx.dll</HintPath>
       </Reference>
@@ -26,13 +29,18 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Include="bin\Debug\net7.0-windows\Data\AlexT\2023-07-21-.csv" />
+      <Content Include="bin\Debug\net7.0-windows\Data\AlexT\2023-07-24-.csv" />
       <Content Include="bin\Debug\net7.0-windows\Data\device1\2023-07-14-v1.csv" />
       <Content Include="bin\Debug\net7.0-windows\Data\device1\2023-07-17-v1.csv" />
       <Content Include="bin\Debug\net7.0-windows\Data\device1\2023-07-18-v1.csv" />
+      <Content Include="bin\Debug\net7.0-windows\Data\device1\2023-07-19-v1.csv" />
       <Content Include="bin\Debug\net7.0-windows\Data\device2\2023-07-17-v1.csv" />
       <Content Include="bin\Debug\net7.0-windows\Data\device2\2023-07-18-v1.csv" />
+      <Content Include="bin\Debug\net7.0-windows\Data\device2\2023-07-19-v1.csv" />
       <Content Include="bin\Debug\net7.0-windows\Data\device3\2023-07-17-v1.csv" />
       <Content Include="bin\Debug\net7.0-windows\Data\device3\2023-07-18-v1.csv" />
+      <Content Include="bin\Debug\net7.0-windows\Data\device3\2023-07-19-v1.csv" />
     </ItemGroup>
 
 </Project>
