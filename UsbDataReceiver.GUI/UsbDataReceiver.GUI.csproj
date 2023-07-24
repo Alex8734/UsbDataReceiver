@@ -29,6 +29,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Include="bin\Debug\net7.0-windows\config\devices.json" />
+      <Content Include="bin\Debug\net7.0-windows\config\io-devices.json" />
+      <Content Include="bin\Debug\net7.0-windows\Data\AlexTr2\2023-07-24-.csv" />
+      <Content Include="bin\Debug\net7.0-windows\Data\AlexTr3\2023-07-24-.csv" />
+      <Content Include="bin\Debug\net7.0-windows\Data\AlexTr\2023-07-24-.csv" />
       <Content Include="bin\Debug\net7.0-windows\Data\AlexT\2023-07-21-.csv" />
       <Content Include="bin\Debug\net7.0-windows\Data\AlexT\2023-07-24-.csv" />
       <Content Include="bin\Debug\net7.0-windows\Data\device1\2023-07-14-v1.csv" />

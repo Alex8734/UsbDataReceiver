@@ -21,11 +21,12 @@ public sealed class DeviceDisplayModel : Border
     private Label _deviceLabel;
     private Button _loggingButton;
     public MeasuredDevice RepresentedDevice { get; }
-    public DataDisplayViewModel DataDisplayVM { get; set; }
+    public DataDisplayView DataDisplay { get; set; }
+    public DataDisplayViewModel? DataDisplayVM => DataDisplay.DataContext as DataDisplayViewModel;
     public DeviceDisplayModel(MeasuredDevice device)
     {
         RepresentedDevice = device;
-        DataDisplayVM = new DataDisplayViewModel();
+        DataDisplay = new DataDisplayView();
 
         var vm = DataContext as MainViewModel;
         BorderBrush = Brushes.Gray;
@@ -87,18 +88,33 @@ public sealed class DeviceDisplayModel : Border
     
         Child = _layoutGrid;
         Thread.Sleep(1000);
-        DataDisplayVM.SetDevice(device);
+        DataDisplayVM?.SetDevice(device);
     }
 
     private void StartLoggingDevice_Click(object sender, RoutedEventArgs e)
     {
-        LogManager.StartLoggingDevice(RepresentedDevice);
+        if(sender is not Button btn) return;
+        switch (btn.Content)
+        {
+            case "▶":
+                btn.Content = "■";
+                btn.Foreground = Brushes.Red;
+                LogManager.StartLoggingDevice(RepresentedDevice);
+                break;
+            case "■":
+                btn.Content = "▶";
+                btn.Foreground = Brushes.Lime;
+                LogManager.StopLoggingDevice(RepresentedDevice.Name);
+                break;
+        }
+        
+        
     }
     private void Device_Click(object sender, RoutedEventArgs e)
     {
         if (DataContext is not MainViewModel vm) return;
         vm.BackButtonVisibility = Visibility.Visible;
-        vm.CurrentView = DataDisplayVM;
+        vm.CurrentView = DataDisplay;
 
     }
     private void Device_MouseEnter(object sender, MouseEventArgs e)

@@ -10,6 +10,7 @@ using UsbDataReceiver;
 using UsbDataReceiver.GUI.MVVM.Model;
 using System.Windows.Media;
 using System.Windows;
+using System.Windows.Threading;
 using UsbDataReceiver.GUI.MVVM.View;
 
 namespace UsbDataReceiver.GUI.MVVM.ViewModel;
@@ -33,11 +34,8 @@ public class MainViewModel : ObservableObject
 
     public static List<MeasuredDevice> Devices { get; } = new();
 
-    private static List<IODevice> _ioDevices = IODevice.GetConnectedDevices()?
-                                                   .Select(d => new IODevice(d.DeviceID, d.AIPhysicalChannels.Length))
-                                                   .ToList()
-                                               ?? new List<IODevice>();
-
+    private static List<IODevice> _ioDevices = new();
+    private DispatcherTimer _timer;
     public static List<IODevice> IoDevices
     {
         get
@@ -104,7 +102,16 @@ public class MainViewModel : ObservableObject
     }
     public MainViewModel()
     {
-        
+        _timer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(20)
+        };
+        _timer.Tick += (sender, args) =>
+        {
+            SaveLoader.SaveIoDevices(IoDevices);
+            SaveLoader.SaveMeasuredDevices(Devices);
+        };
+        _timer.Start();
         //init Views
         AllDataDisplayVM = new AllDataDisplayViewModel();
         AddDeviceVM = new AddDeviceViewModel();

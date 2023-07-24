@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq.Expressions;
+using System.Text.Json.Serialization;
 using NationalInstruments.DAQmx;
 using UsbDataReceiver.Extensions;
 using Task = NationalInstruments.DAQmx.Task;
@@ -11,12 +12,15 @@ public class MeasuredDevice
 {
     private DataManager _dataManager;
     public string Name { get; set; }
+    [JsonIgnore]
+    public bool IsConnected => Ports.All(p => IODevice.GetConnectedDevices()?.Select(d => d.DeviceID).Contains(p.Name) ?? false);
     public  IReadOnlyCollection<PortDescription> Ports { get; }
     private readonly Task _measureTask = new();
     
     private AnalogMultiChannelReader Reader { get; }
+    [JsonIgnore]
     public Dictionary<string, double> Data { get; } = new();
-    
+    [JsonConstructor]
     public MeasuredDevice(string name, IEnumerable<PortDescription> ports)
     {
         Name = name;

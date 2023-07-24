@@ -16,7 +16,7 @@ namespace UsbDataReceiver.GUI.MVVM.ViewModel
     {
         //public List<PortModel> Ports { get; set; } = new();
         private string? _selectedIoDevice;
-        private int? _selectedPort;
+        
 
         public string? SelectedIoDevice
         {
@@ -27,6 +27,8 @@ namespace UsbDataReceiver.GUI.MVVM.ViewModel
                 OnPropertyChanged(nameof(PortsOfSelectedDevice));
             }
         }
+
+        private int? _selectedPort; 
 
         public string PortName { get; set; }
         public MeasurementType SelectedPortType { get; set; }
@@ -50,18 +52,23 @@ namespace UsbDataReceiver.GUI.MVVM.ViewModel
             }
         }
         public List<Device>? AvailableNiDevices => IODevice.GetConnectedDevices();
-        public List<string> AvailableNiDeviceNames => MainViewModel.IoDevices
-            .Where(d => d.AvailablePorts.Count > 0)
-            .Select(x => x.Name).ToList();
-        public List<string> MeasurementTypes => Enum.GetNames(typeof(MeasurementType)).ToList();
+        public List<string> AvailableNiDeviceNames =>
+            MainViewModel.IoDevices
+                .Where(d => d.AvailablePorts.Count > 0)
+                .Select(x => x.Name).ToList();
 
+        public List<string> MeasurementTypes => Enum.GetNames(typeof(MeasurementType)).ToList();
+        
         public List<string> PortsOfSelectedDevice => MainViewModel.IoDevices
             .FirstOrDefault(d => d.Name == SelectedIoDevice)?.AvailablePorts
             .Select(p => p.ToString()).ToList() ?? new List<string>();
 
         public PortLayoutViewModel()
         {
-
+            PortName = string.Empty;
+            _selectedIoDevice = AvailableNiDeviceNames.FirstOrDefault();
+            _selectedPort = MainViewModel.IoDevices
+                .FirstOrDefault(d => d.Name == SelectedIoDevice )?.GetNextAvailablePort();
         }
     }
 }

@@ -26,7 +26,7 @@ internal static class Extensions
 
         var sources = newList.ToList();
         // If the lists are equal, do nothing.
-        if(sourceList.All(item2 => sources.Any(item1 => Equals(newItemSelector(item1), oldItemSelector(item2)))))
+        if(sourceList.Count == sources.Count && sourceList.All(item2 => sources.Any(item1 => Equals(newItemSelector(item1), oldItemSelector(item2)))))
             return;
         
         var existingKeys = sourceList.Select(oldItemSelector).ToList();

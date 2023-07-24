@@ -14,15 +14,19 @@
         <viewModel:ChartLayoutViewModel/>
     </UserControl.DataContext>
     <Grid Margin="13">
-        <d3:Chart Name="plotter"
+        <d3:Chart x:Name="plotter"
                   Width="300"
                   Height="300"
                   Background="Transparent"
                   Foreground="Gray"
                   LegendVisibility="Hidden"
                   IsAutoFitEnabled="True"
+                  IsManipulationEnabled="False"
+                  IsEnabled="True"
                   IsVerticalNavigationEnabled="False"
-                  IsHorizontalNavigationEnabled="False">
+                  IsHorizontalNavigationEnabled="True"
+                  PreviewDragLeave="Plotter_OnDragLeave"
+                  DragLeave="Plotter_OnDragLeave">
             <d3:Chart.Title>
                 <TextBlock HorizontalAlignment="Center" FontSize="18" Margin="0,5,0,5">
                     Device1

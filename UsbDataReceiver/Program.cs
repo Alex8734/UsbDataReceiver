@@ -9,7 +9,7 @@ var dev = new IODevice("Dev2", 8);
 
 var device1 = new MeasuredDevice("AmpereTest", new[]
 {
-    new PortDescription(dev.GetNextAvailablePort(), MeasurementType.Ampere, dev, "Ampere")
+    new PortDescription(dev.GetNextAvailablePort() ?? -1, MeasurementType.Ampere, dev, "Ampere")
 });
 
 LogManager.LogName = "Test1";

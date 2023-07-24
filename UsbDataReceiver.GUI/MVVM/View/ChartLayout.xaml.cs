@@ -54,7 +54,16 @@ public partial class ChartLayout : UserControl
             lines.Children.Add(graph);
         }
 
-        _timer.Tick += (sender, args) => vm.UpdateData(data);
+        _timer.Tick += (sender, args) =>
+        {
+            vm.UpdateData(data);
+            if(vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.X)) >= plotter.PlotWidth )
+            {
+                
+                plotter.PlotOriginX = vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.X)) -plotter.PlotWidth;
+                plotter.PlotHeight = vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.Y));
+            }
+        };
         _timer.Start();
     }
 
@@ -67,6 +76,12 @@ public partial class ChartLayout : UserControl
     private void ChartLayout_OnLoaded(object sender, RoutedEventArgs e)
     {
         _timer.Start();
+    }
+
+    private void Plotter_OnDragLeave(object sender, DragEventArgs e)
+    {
+        if(sender is not Chart plotter) return;
+        plotter.IsAutoFitEnabled = true;
     }
 }
 

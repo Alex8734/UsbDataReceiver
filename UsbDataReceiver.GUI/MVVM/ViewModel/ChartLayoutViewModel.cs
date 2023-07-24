@@ -27,7 +27,6 @@ public class ChartLayoutViewModel : ObservableObject
         {
             Strokes.Push(stroke);
         }
-        Strokes.Push(Brushes.Black);
     }
     public void AddLine(string name)
     {
@@ -67,13 +66,12 @@ public class Line
         LineChart = new LineGraph
         {
             Stroke = key.Contains("Max") 
-                ? GetDarkerColor(stroke, 1) 
+                ? GetDarkerColor(stroke, .4) 
                 : key.Contains("Min") 
                     ? GetLighterColor(stroke, 1) 
                     : stroke,
             Description = key,
             StrokeThickness = 2,
-            IsManipulationEnabled = true,
             Visibility = Visibility.Visible,
         };
 
