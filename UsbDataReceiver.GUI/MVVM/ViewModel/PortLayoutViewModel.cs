@@ -23,8 +23,17 @@ namespace UsbDataReceiver.GUI.MVVM.ViewModel
             get => _selectedIoDevice;
             set
             {
+                var ioDev = MainViewModel.IoDevices.FirstOrDefault(d => d.Name == _selectedIoDevice);
+                
+                if (ioDev is not null && _selectedPort is not null)
+                {
+                    ioDev.AvailablePorts.Add((int)_selectedPort);
+                    _selectedPort = null;
+                }
                 _selectedIoDevice = value ;
+                OnPropertyChanged();
                 OnPropertyChanged(nameof(PortsOfSelectedDevice));
+                OnPropertyChanged(nameof(SelectedPort));
             }
         }
 
@@ -47,7 +56,6 @@ namespace UsbDataReceiver.GUI.MVVM.ViewModel
                 }
 
                 _selectedPort = value;
-                OnPropertyChanged(nameof(PortsOfSelectedDevice));
                 ioDev.AvailablePorts.Remove((int)value);
             }
         }
@@ -59,16 +67,27 @@ namespace UsbDataReceiver.GUI.MVVM.ViewModel
 
         public List<string> MeasurementTypes => Enum.GetNames(typeof(MeasurementType)).ToList();
         
-        public List<string> PortsOfSelectedDevice => MainViewModel.IoDevices
-            .FirstOrDefault(d => d.Name == SelectedIoDevice)?.AvailablePorts
-            .Select(p => p.ToString()).ToList() ?? new List<string>();
+        public List<string> PortsOfSelectedDevice
+        {
+            get
+            {
+                var ports = MainViewModel.IoDevices
+                    .FirstOrDefault(d => d.Name == SelectedIoDevice)?.AvailablePorts
+                    .Select(p => p.ToString()).ToList() ?? new List<string>();
+                if(SelectedPort is not null)
+                {
+                    ports.Add(SelectedPort.ToString()!);
+                    ports.Sort();
+                }
+                return ports;
+            }
+        }
 
         public PortLayoutViewModel()
         {
             PortName = string.Empty;
-            _selectedIoDevice = AvailableNiDeviceNames.FirstOrDefault();
-            _selectedPort = MainViewModel.IoDevices
-                .FirstOrDefault(d => d.Name == SelectedIoDevice )?.GetNextAvailablePort();
+            SelectedIoDevice = AvailableNiDeviceNames.FirstOrDefault();
+            
         }
     }
 }

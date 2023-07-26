@@ -89,18 +89,22 @@ public partial class ChartItem : UserControl
         }
         if(DataContext is not ChartLayoutViewModel vm) return;
         
-        var data = measurePortKey is null 
-            ? device.Data 
-            : device.Data.Where(d => d.Key.Contains(measurePortKey))
-                .ToDictionary(kv => kv.Key,kv => kv.Value);
-
-        while (data.Count < 1)
+         
+        Dictionary<string, double> GetDataWithContainingKey(Dictionary<string, double> data, string key)
+        {
+            return measurePortKey is null 
+                ? device.Data 
+                : device.Data.Where(d => d.Key.Contains(measurePortKey))
+                    .ToDictionary(kv => kv.Key,kv => kv.Value);
+        }
+        
+        while (GetDataWithContainingKey(device.Data,measurePortKey).Count < 1)
         {
             //wait until Data is initialized
             Thread.Sleep(10);
         }
         
-        foreach (var (key,_) in data)
+        foreach (var (key,_) in GetDataWithContainingKey(device.Data,measurePortKey))
         {
             vm.AddLine(key);
         }
@@ -112,7 +116,7 @@ public partial class ChartItem : UserControl
 
         _timer.Tick += (sender, args) =>
         {
-            vm.UpdateData(data);
+            vm.UpdateData(GetDataWithContainingKey(device.Data,measurePortKey));
             if(vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.X)) >= plotter.PlotWidth )
             {
                 

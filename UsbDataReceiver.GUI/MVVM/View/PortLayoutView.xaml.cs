@@ -30,6 +30,7 @@ namespace UsbDataReceiver.GUI.MVVM.View
             if (DataContext is PortLayoutViewModel vm)
             {
                 vm.SelectedIoDevice = NiDeviceSelector.SelectedValue?.ToString() ?? "";
+                PortSelector.SelectedIndex = 0;
             }
         }
 
@@ -38,26 +39,44 @@ namespace UsbDataReceiver.GUI.MVVM.View
             if (DataContext is PortLayoutViewModel vm)
             {
                 vm.SelectedIoDevice = NiDeviceSelector.SelectedValue.ToString();
+                if(PortSelector is not null)
+                {
+                    PortSelector.SelectedIndex = 0;
+                }
             }
         }
 
         private void RemoveItem_OnClick(object sender, RoutedEventArgs e)
         {
+            
             if (sender is Button button &&
                 button.FindParent<AddDeviceView>() is
                 {
                     DataContext: AddDeviceViewModel vmParent
+                } && button.FindParent<PortLayoutView>() is
+                {
+                    DataContext: PortLayoutViewModel vm
                 })
             {
+                MainViewModel.IoDevices?.FirstOrDefault(d => d.Name == vm.SelectedIoDevice)?.AvailablePorts.Add(vm.SelectedPort ?? 0);
                 vmParent.RemovePort(this);
             }
         }
 
-        private void PortSelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PortSelector_OnSelectionChanged(object sender, RoutedEventArgs routedEventArgs)
         {
             if (DataContext is PortLayoutViewModel vm && PortSelector.SelectedValue is not null && int.TryParse(PortSelector.SelectedValue.ToString(), out var selectedPort))
             {
                 vm.SelectedPort = selectedPort;
+            }
+        }
+
+        private void PortSelector_OnDropDownOpened(object? sender, EventArgs e)
+        {
+            if (DataContext is PortLayoutViewModel vm && sender is ComboBox comboBox)
+            {
+                
+                vm.OnPropertyChanged(nameof(vm.PortsOfSelectedDevice));
             }
         }
     }

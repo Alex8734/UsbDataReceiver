@@ -25,7 +25,7 @@ public class AddDeviceViewModel : ObservableObject
         set
         {
             _portLayoutViews = value;
-            OnPropertyChanged(nameof(PortLayoutViews));
+            OnPropertyChanged();
         }
     }
     private string _deviceName = string.Empty;
@@ -46,7 +46,7 @@ public class AddDeviceViewModel : ObservableObject
     }
     public AddDeviceViewModel()
     {
-        PortLayoutViews = new ObservableCollection<PortLayoutView>();
+        _portLayoutViews = new ObservableCollection<PortLayoutView>();
     }
 
     public PortLayoutView AddPort()
