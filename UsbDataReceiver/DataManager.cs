@@ -5,7 +5,7 @@ public class DataManager
     private static readonly List<MeasuredDevice> DataDevices = new();
     private static Thread _updateDataThread = new (UpdateDataLoop);
     private static bool _isUpdating = true;
-    public static double LowestMinValue { get; set; } = 3;
+    public static double StartMinThreshold { get; set; } = 3;
     public static bool IsUpdating
     {
         get => _isUpdating;

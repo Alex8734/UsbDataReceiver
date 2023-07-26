@@ -51,7 +51,7 @@ namespace UsbDataReceiver.GUI {
         /// InitializeComponent
         /// </summary>
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "7.0.2.0")]
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "7.0.9.0")]
         public void InitializeComponent() {
             if (_contentLoaded) {
                 return;
@@ -77,7 +77,7 @@ namespace UsbDataReceiver.GUI {
         /// </summary>
         [System.STAThreadAttribute()]
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "7.0.2.0")]
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "7.0.9.0")]
         public static void Main() {
             UsbDataReceiver.GUI.App app = new UsbDataReceiver.GUI.App();
             app.InitializeComponent();

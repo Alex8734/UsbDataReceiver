@@ -40,7 +40,7 @@ public class MainViewModel : ObservableObject
         }
     }
 
-    public static List<MeasuredDevice> Devices { get; } = new();
+    public static List<MeasuredDevice> Devices { get; private set; } = new();
 
     private static List<IODevice> _ioDevices = new();
     private DispatcherTimer _timer;
@@ -167,6 +167,13 @@ public class MainViewModel : ObservableObject
             CurrentView = AllDataDisplayVM;
             BackButtonVisibility = Visibility.Hidden;
         });
+        
+        var devices = SaveLoader.LoadMeasuredDevices();
+        Devices = devices.Select(d => 
+            new MeasuredDevice(d.Name, 
+                d.Ports.Select(p => 
+                    new PortDescription(p.Id, p.Type, 
+                        IoDevices.First(io => io.Name == p.Device),p.Name)))).ToList();
 
     }
 }

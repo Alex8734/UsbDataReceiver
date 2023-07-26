@@ -25,34 +25,22 @@ public static class SaveLoader
         if (!File.Exists(DeviceFile)) return new List<JsonMeasuredDevice>();
         var file = File.ReadAllText(DeviceFile);
         var devices = JsonSerializer.Deserialize<JsonMeasuredDevice[]>(file, Options);
-        var ioDevs = new List<IODevice>();
-        var normalDevices = devices.Select(d => new MeasuredDevice(
-                d.Name,
-                d.Ports.Select(p =>
-                    new PortDescription(p.Id, p.Type, ioDevs.FirstOrDefault(i => i.Name == p.Device), p.Name))
-                .ToList()))
-            .ToList();
+       
         return devices?.ToList() ?? new List<JsonMeasuredDevice>();
     }
-    private static List<IODevice> ConfigureIoDevicesFromOutput(IEnumerable<JsonMeasuredDevice> devices)
-    {
-        var ioDevices = new List<IODevice>();
-        foreach (var device in devices)
-        {
-            foreach (var port in device.Ports)
-            {
-                if (ioDevices.Any(d => d.Name == port.Device)) continue;
-                ioDevices.Add(new IODevice(port.Device, new List<int>()));
-            }
-        }
-
-        throw new NotImplementedException();
-    }
+    
     public static void SaveMeasuredDevices(List<MeasuredDevice> devices)
     {
         if (!Directory.Exists(Dir))
             Directory.CreateDirectory(Dir);
-        var json = JsonSerializer.Serialize(devices, Options);
+        var jsonDevices = 
+            devices.Select(d => 
+                new JsonMeasuredDevice(d.Name, d.Ports.Select(p => 
+                    new JsonPortDescription(p.Id, p.Type, p.Device.Name, p.Name))
+                    .ToList()))
+                .ToList();
+        
+        var json = JsonSerializer.Serialize(jsonDevices, Options);
         File.WriteAllText(DeviceFile, json);
     } 
     
@@ -68,15 +56,11 @@ public static class SaveLoader
     {
         if (!File.Exists(IoDeviceFile)) return new List<IODevice>();
         var file = File.ReadAllText(IoDeviceFile);
-        var devices = JsonSerializer.Deserialize<IODevice[]>(file.ToString(),Options);
+        var devices = JsonSerializer.Deserialize<IODevice[]>(file,Options);
         return devices?.ToList() ?? new List<IODevice>();
     }
 
 }
 
-public class JsonMeasuredDevice
-{
-    public string Name { get; set; }
-    public List<JsonPortDescription> Ports { get; set; }
-}
+public record JsonMeasuredDevice(string Name, List<JsonPortDescription> Ports);
 public record JsonPortDescription (int Id, MeasurementType Type, string Device, string Name);

@@ -61,7 +61,7 @@ namespace UsbDataReceiver.GUI
         {
             Application.Current.Shutdown();
             DataManager.IsUpdating = false;
-            LogManager.DisposeAll();
+            LogManager.StopAll();
             
         }
 

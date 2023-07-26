@@ -56,6 +56,7 @@ public partial class AddDeviceView : UserControl
         if(main?.DataContext is not MainViewModel mainVm) return;
         mainVm.AddDevice(newDev);
         mainVm.CurrentView = mainVm.AllDataDisplayVM;
+        SaveLoader.SaveMeasuredDevices(MainViewModel.Devices);
     }
 
     private void Placeholder_OnGotFocus(object sender, RoutedEventArgs e)

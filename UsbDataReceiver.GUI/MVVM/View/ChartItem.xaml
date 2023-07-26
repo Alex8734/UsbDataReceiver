@@ -25,6 +25,7 @@
                   IsEnabled="True"
                   IsVerticalNavigationEnabled="False"
                   IsHorizontalNavigationEnabled="True"
+                  PlotHeight="5"
                   PreviewDragLeave="Plotter_OnDragLeave"
                   DragLeave="Plotter_OnDragLeave">
             <d3:Chart.Title>

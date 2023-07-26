@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "J5ESw1jHf5KfWkmvo8iYAnas/G6dsN17xpYQIKrWXY/dpk07r1EmHMWZvcU/HTtyz+h5sXZ9W+8UWRLwbkW+pA==",
+  "dgSpecHash": "CaUJp/4WqcB1sZeJhC1n1odO/OqONCz6CRIZI89n0VNYTrnF2plOjGTIpbPPRwoQ6aaxFSZ2pZixAjlvhcSj9g==",
   "success": true,
   "projectFilePath": "C:\\Users\\aresc\\source\\repos\\UsbDataReceiver\\UsbDataReceiver.GUI\\UsbDataReceiver.GUI.csproj",
   "expectedPackageFiles": [
@@ -85,7 +85,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'InteractiveDataDisplay.WPF 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0-windows7.0'. This package may not be fully compatible with your project.",
+      "message": "Das Paket \"InteractiveDataDisplay.WPF 1.0.0\" wurde nicht mit dem Projektzielframework \"net7.0-windows7.0\", sondern mit \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\" wiederhergestellt. Dieses Paket ist mit Ihrem Projekt möglicherweise nicht vollständig kompatibel.",
       "libraryId": "InteractiveDataDisplay.WPF",
       "targetGraphs": [
         "net7.0-windows7.0"
@@ -95,7 +95,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Microsoft.Maps.MapControl.WPF 1.0.0.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0-windows7.0'. This package may not be fully compatible with your project.",
+      "message": "Das Paket \"Microsoft.Maps.MapControl.WPF 1.0.0.3\" wurde nicht mit dem Projektzielframework \"net7.0-windows7.0\", sondern mit \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\" wiederhergestellt. Dieses Paket ist mit Ihrem Projekt möglicherweise nicht vollständig kompatibel.",
       "libraryId": "Microsoft.Maps.MapControl.WPF",
       "targetGraphs": [
         "net7.0-windows7.0"
@@ -105,7 +105,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'NI.Data 2.0.10' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0-windows7.0'. This package may not be fully compatible with your project.",
+      "message": "Das Paket \"NI.Data 2.0.10\" wurde nicht mit dem Projektzielframework \"net7.0-windows7.0\", sondern mit \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\" wiederhergestellt. Dieses Paket ist mit Ihrem Projekt möglicherweise nicht vollständig kompatibel.",
       "libraryId": "NI.Data",
       "targetGraphs": [
         "net7.0-windows7.0"

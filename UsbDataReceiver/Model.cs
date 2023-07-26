@@ -9,7 +9,7 @@ public record PortDescription (int Id, MeasurementType Type, IODevice Device, st
 
 public record MeasurementData(DateTime TimeStamp, Dictionary<string,double> Data);
 
-public record DeviceLogs(string DeviceName, List<(string LogName, List<MeasurementData>)> Logs);
+public record DeviceLogs(string DeviceName, List<(string LogName, List<MeasurementData> Data)> Logs);
 
 public enum MeasurementType
 {

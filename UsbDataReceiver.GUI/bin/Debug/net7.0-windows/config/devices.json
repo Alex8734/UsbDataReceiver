@@ -1,0 +1,30 @@
+[
+  {
+    "Name": "New Device",
+    "Ports": [
+      {
+        "Id": 0,
+        "Type": "voltage",
+        "Device": "Dev1",
+        "Name": "LadeStrom"
+      },
+      {
+        "Id": 1,
+        "Type": "voltage",
+        "Device": "Dev1",
+        "Name": "LadeSpannung"
+      }
+    ]
+  },
+  {
+    "Name": "Transponder3",
+    "Ports": [
+      {
+        "Id": 0,
+        "Type": "voltage",
+        "Device": "Dev2",
+        "Name": "Ladespannung"
+      }
+    ]
+  }
+]
