@@ -50,4 +50,65 @@ public static class LogManager
         }
     }
     
+    public static DeviceLogs? ReadDeviceLogs(string path)
+    {
+        var deviceName = path.Split("/").Last();
+        var logs = new List<(string, List<MeasurementData>)>();
+        foreach (var file in Directory.GetFiles(path))
+        {
+            var logName = file.Split("/").Last();
+            var data = ReadLogFile(file);
+            if(data != null)
+            {
+                logs.Add((logName, data));
+            }
+        }
+        if(logs.Count == 0)
+        {
+            return null;
+        }
+        return new DeviceLogs(deviceName, logs);
+    }
+    
+    public static List<MeasurementData>? ReadLogFile(string path)
+    {
+        string[] file;
+        try
+        {
+            file = File.ReadAllLines(path);
+        }
+        catch (IOException)
+        {
+            return null;
+        }
+        
+        
+        if(file.Length == 0 || !file[0].StartsWith("#Date_Time;"))
+        {
+            return null;
+        }
+        var data = new List<MeasurementData>();
+        var keys = file[0].Split("#")[1].Split(";");
+        
+        
+        for(int i = 1; i< file.Length; i++)
+        {
+            var line = file[i].Split(';');
+            if(!DateTime.TryParse(line[0],out var date)) continue;
+            var values = new Dictionary<string, double>();
+            for(int j = 1; j < line.Length; j++)
+            {
+                if(keys.Length != line.Length || 
+                   !double.TryParse(line[j],out var value))
+                {
+                    continue;
+                }
+                var key = keys[j];
+                values.Add(key, value);
+            }
+            data.Add(new MeasurementData(date, values));
+        }
+
+        return data;
+    }
 }

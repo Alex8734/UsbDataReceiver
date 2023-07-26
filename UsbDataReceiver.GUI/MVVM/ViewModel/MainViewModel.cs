@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using UsbDataReceiver.GUI.Core;
 using UsbDataReceiver.Log;
@@ -10,8 +10,11 @@ using UsbDataReceiver;
 using UsbDataReceiver.GUI.MVVM.Model;
 using System.Windows.Media;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Threading;
 using UsbDataReceiver.GUI.MVVM.View;
+using Label = System.Windows.Controls.Label;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace UsbDataReceiver.GUI.MVVM.ViewModel;
 
@@ -20,6 +23,11 @@ public class MainViewModel : ObservableObject
     public static readonly Label NoDevicesLabel = new()
     {
         Content = "No Transponders"
+    };
+    
+    public static readonly Label NoLogsLabel = new()
+    {
+        Content = "No Logs"
     };
 
     public Visibility BackButtonVisibility
@@ -50,6 +58,18 @@ public class MainViewModel : ObservableObject
         }
     }
 
+    public ObservableCollection<object> DeviceLogs
+    {
+        get
+        {
+            var devices = Directory.GetDirectories(LogManager.LogPath).Where(d => Directory.GetFiles(d).Any(f => f.EndsWith(".csv"))).ToList();
+            return new ObservableCollection<object>(
+                devices.Count > 0 
+                    ? devices.Select(d => new LogDisplay(d.Split("\\").Last())) 
+                    : new[]{NoLogsLabel});
+        }
+    }
+
     public ObservableCollection<object> DisplayDevices
     {
         get
@@ -69,16 +89,17 @@ public class MainViewModel : ObservableObject
             return _displayDevices;
         }
     }
-
+    public RelayCommand SelectLogFolderCommand { get; set; }
     public RelayCommand DataDisplayCommand { get; set; }
     public RelayCommand AddDeviceCommand { get; set; }
     public RelayCommand BackButtonCommand { get; set; }
 
     public AddDeviceViewModel AddDeviceVM { get; set; }
-    public AllDataDisplayViewModel AllDataDisplayVM { get; set; }
+    public DataOverviewViewModel AllDataDisplayVM { get; set; }
     
     private object _currentView = null!;
     private Visibility _backButtonVisibility;
+    
     private readonly ObservableCollection<object> _displayDevices = new (Devices.Count != 0 
         ?  Devices.Select(d => new DeviceDisplayModel(d)) 
         : new List<Label>{NoDevicesLabel} );
@@ -100,6 +121,7 @@ public class MainViewModel : ObservableObject
         //AllDataDisplayVM.AddDevice(device);
         OnPropertyChanged(nameof(DisplayDevices));
     }
+
     public MainViewModel()
     {
         _timer = new DispatcherTimer
@@ -113,14 +135,24 @@ public class MainViewModel : ObservableObject
         };
         _timer.Start();
         //init Views
-        AllDataDisplayVM = new AllDataDisplayViewModel();
+        AllDataDisplayVM = new DataOverviewViewModel();
         AddDeviceVM = new AddDeviceViewModel();
-        //AllDataDisplayVM = new AllDataDisplayViewModel();
         
         CurrentView = AllDataDisplayVM;
         BackButtonVisibility = Visibility.Hidden;
         
         //init Commands
+        SelectLogFolderCommand = new RelayCommand(o =>
+        {
+            var dirDialog = new FolderBrowserDialog();
+            dirDialog.SelectedPath = LogManager.LogPath;
+            var d = dirDialog.ShowDialog();
+            if (d != DialogResult.OK) return;
+            
+            LogManager.LogPath = dirDialog.SelectedPath;
+            OnPropertyChanged(nameof(DeviceLogs));
+        });
+        
         DataDisplayCommand = new RelayCommand(o =>
         {
             //CurrentView = AllDataDisplayVM;

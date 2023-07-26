@@ -41,8 +41,6 @@ C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\bin\Debug\net7.0
 C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\bin\Debug\net7.0-windows\System.Reactive.Linq.dll
 C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\bin\Debug\net7.0-windows\System.Reactive.PlatformServices.dll
 C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\bin\Debug\net7.0-windows\System.Runtime.InteropServices.WindowsRuntime.dll
-C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\MVVM\View\ChartLayout.g.cs
-C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\MVVM\View\ChartLayout.baml
 C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\MVVM\View\ChartDeviceView.g.cs
 C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\MVVM\View\ChartDeviceView.baml
 C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\Themes\NameBox.baml
@@ -50,3 +48,7 @@ C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0
 C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\UsbDataReceiver.GUI_Content.g.cs
 C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\MVVM\View\PortLayoutView.g.cs
 C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\MVVM\View\PortLayoutView.baml
+C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\MVVM\View\LogView.g.cs
+C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\MVVM\View\LogView.baml
+C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\MVVM\View\ChartItem.g.cs
+C:\Users\aresc\source\repos\UsbDataReceiver\UsbDataReceiver.GUI\obj\Debug\net7.0-windows\MVVM\View\ChartItem.baml

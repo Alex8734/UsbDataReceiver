@@ -119,15 +119,16 @@
                            FontWeight="Medium"
                            Foreground="Gray"/>
                     <Button Background="Transparent"
-                            Content="＋"
                             BorderThickness=".6"
                             Foreground="Gray"
+                            Content="＋"
                             FontSize="15"
                             FontWeight="Bold"
                             Height="24"
                             Width="24"
                             Command="{Binding AddDeviceCommand}"
                             Click="ButtonBase_OnClick"/>
+                        
                 </StackPanel>
             </Border>
             <ItemsControl x:Name="DeviceList" Grid.Row="3" HorizontalAlignment="Center"
@@ -146,12 +147,25 @@
                            HorizontalAlignment="Left"
                            FontWeight="Medium"
                            Foreground="Gray"/>
+                    <Button Background="Transparent"
+                            BorderThickness=".6"
+                            Foreground="Gray"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            Height="24"
+                            Width="24"
+                            Command="{Binding SelectLogFolderCommand}"
+                            Click="ButtonBase_OnClick">
+                        <Button.Content>
+                            <Image Width="18" Source="Icons/icons-browse-folder.png"/>
+                        </Button.Content>
+                    </Button>
                 </StackPanel>
             </Border>
-            <StackPanel x:Name="LogList" Grid.Row="5" HorizontalAlignment="Center"
-                        Orientation="Vertical">
-                <Label Content="No Logs"/>
-            </StackPanel>
+            <ItemsControl x:Name="LogList" Grid.Row="5" 
+                          HorizontalAlignment="Center"
+                          ItemsSource="{Binding DeviceLogs}">
+            </ItemsControl>
         </Grid>
         
         <ContentControl Grid.Row="1" Grid.Column="1"

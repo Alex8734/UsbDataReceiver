@@ -8,18 +8,18 @@ using UsbDataReceiver.GUI.MVVM.View;
 
 namespace UsbDataReceiver.GUI.MVVM.ViewModel
 {
-    public class AllDataDisplayViewModel : ObservableObject
+    public class DataOverviewViewModel : ObservableObject
     {
 
-        public List<ChartLayout> Views { get; }
-        public AllDataDisplayViewModel()
+        public List<ChartItem> Views { get; }
+        public DataOverviewViewModel()
         {
-            Views = new List<ChartLayout>();
+            Views = new List<ChartItem>();
         }
 
         public void AddDevice(MeasuredDevice device)
         {
-            var chartLayout = new ChartLayout(device);
+            var chartLayout = new ChartItem(device);
             Views.Add(chartLayout);
 
             OnPropertyChanged(nameof(Views));

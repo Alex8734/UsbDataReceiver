@@ -8,10 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Icons\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\UsbDataReceiver\UsbDataReceiver.csproj" />
     </ItemGroup>
 
@@ -21,6 +17,9 @@
       </Reference>
       <Reference Include="NationalInstruments.DAQmx">
         <HintPath>..\UsbDataReceiver\src\libs\NationalInstruments.DAQmx.dll</HintPath>
+      </Reference>
+      <Reference Include="System.Windows.Forms">
+        <HintPath>libs\System.Windows.Forms.dll</HintPath>
       </Reference>
     </ItemGroup>
 
@@ -46,6 +45,14 @@
       <Content Include="bin\Debug\net7.0-windows\Data\device3\2023-07-17-v1.csv" />
       <Content Include="bin\Debug\net7.0-windows\Data\device3\2023-07-18-v1.csv" />
       <Content Include="bin\Debug\net7.0-windows\Data\device3\2023-07-19-v1.csv" />
+      <Content Include="bin\Debug\net7.0-windows\Data\Transponder1\2023-07-26-.csv" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Icons\icons-browse-folder.png" />
+      <Resource Include="Icons\icons-browse-folder.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 
 </Project>

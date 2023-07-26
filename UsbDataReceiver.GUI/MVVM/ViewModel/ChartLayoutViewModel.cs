@@ -27,7 +27,21 @@ public class ChartLayoutViewModel : ObservableObject
         {
             Strokes.Push(stroke);
         }
+        Strokes.Push(Brushes.Black);
     }
+    
+    public void AddLine(string name, List<double> x, List<double> y)
+    {
+        if(!name.Contains("Max") && !name.Contains("Min"))
+        {
+            Strokes.Pop();
+        }
+        Lines.Add(name,new(name, Strokes.Peek()));
+        Lines[name].LineChart.Plot(x,y);
+        Lines[name].LineChart.Visibility = Visibility.Visible;
+        OnPropertyChanged();
+    }
+    
     public void AddLine(string name)
     {
         if(!name.Contains("Max") && !name.Contains("Min"))

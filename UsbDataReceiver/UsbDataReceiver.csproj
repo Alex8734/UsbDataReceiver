@@ -21,10 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="src\libs\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Content Include="..\README.md">
         <Link>README.md</Link>
       </Content>

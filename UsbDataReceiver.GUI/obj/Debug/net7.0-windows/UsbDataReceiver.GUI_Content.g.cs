@@ -24,5 +24,6 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/net7.0-windows/data/device3/2023-07-17-v1.csv")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/net7.0-windows/data/device3/2023-07-18-v1.csv")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/net7.0-windows/data/device3/2023-07-19-v1.csv")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bin/debug/net7.0-windows/data/transponder1/2023-07-26-.csv")]
 
 
