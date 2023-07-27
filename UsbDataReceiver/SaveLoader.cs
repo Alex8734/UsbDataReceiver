@@ -44,21 +44,6 @@ public static class SaveLoader
         File.WriteAllText(DeviceFile, json);
     } 
     
-    public static void SaveIoDevices(List<IODevice> devices)
-    {
-        if (!Directory.Exists(Dir))
-            Directory.CreateDirectory(Dir);
-        var json = JsonSerializer.Serialize(devices, Options);
-        File.WriteAllText(IoDeviceFile, json);
-    }
-    
-    public static List<IODevice> LoadIoDevices()
-    {
-        if (!File.Exists(IoDeviceFile)) return new List<IODevice>();
-        var file = File.ReadAllText(IoDeviceFile);
-        var devices = JsonSerializer.Deserialize<IODevice[]>(file,Options);
-        return devices?.ToList() ?? new List<IODevice>();
-    }
 
 }
 

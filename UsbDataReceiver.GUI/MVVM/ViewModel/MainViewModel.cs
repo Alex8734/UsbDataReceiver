@@ -43,7 +43,6 @@ public class MainViewModel : ObservableObject
     public static List<MeasuredDevice> Devices { get; private set; } = new();
 
     private static List<IODevice> _ioDevices = new();
-    private DispatcherTimer _timer;
     public static List<IODevice> IoDevices
     {
         get
@@ -124,16 +123,7 @@ public class MainViewModel : ObservableObject
 
     public MainViewModel()
     {
-        _timer = new DispatcherTimer
-        {
-            Interval = TimeSpan.FromSeconds(20)
-        };
-        _timer.Tick += (sender, args) =>
-        {
-            SaveLoader.SaveIoDevices(IoDevices);
-            SaveLoader.SaveMeasuredDevices(Devices);
-        };
-        _timer.Start();
+        
         //init Views
         AllDataDisplayVM = new DataOverviewViewModel();
         AddDeviceVM = new AddDeviceViewModel();
