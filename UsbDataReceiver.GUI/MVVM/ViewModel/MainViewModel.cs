@@ -168,12 +168,5 @@ public class MainViewModel : ObservableObject
             BackButtonVisibility = Visibility.Hidden;
         });
         
-        var devices = SaveLoader.LoadMeasuredDevices();
-        Devices = devices.Select(d => 
-            new MeasuredDevice(d.Name, 
-                d.Ports.Select(p => 
-                    new PortDescription(p.Id, p.Type, 
-                        IoDevices.First(io => io.Name == p.Device),p.Name)))).ToList();
-
     }
 }

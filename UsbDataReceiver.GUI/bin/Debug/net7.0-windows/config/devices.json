@@ -15,16 +15,5 @@
         "Name": "LadeSpannung"
       }
     ]
-  },
-  {
-    "Name": "Transponder3",
-    "Ports": [
-      {
-        "Id": 0,
-        "Type": "voltage",
-        "Device": "Dev2",
-        "Name": "Ladespannung"
-      }
-    ]
   }
 ]

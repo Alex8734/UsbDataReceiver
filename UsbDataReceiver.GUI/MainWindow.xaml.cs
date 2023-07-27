@@ -31,9 +31,38 @@ namespace UsbDataReceiver.GUI
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel();
             Console.WriteLine();
+            var devices = SaveLoader.LoadMeasuredDevices();
+            
+            foreach (var dev in devices)
+            {
+                var ports = ConvertFromJson(dev.Ports);
+                if (ports == null) continue;
+                var device = new MeasuredDevice(dev.Name, ports);
+                MainViewModel.Devices.Add(device);
+                foreach (var port in ports)
+                {
+                    port.Device.AvailablePorts.Remove(port.Id);
+                }
+            }
+            if( DataContext is not MainViewModel vm) return;
+            vm.OnPropertyChanged(nameof(vm.DisplayDevices));
+            
+            
+            List<PortDescription>? ConvertFromJson(List<JsonPortDescription> ports)
+            {
+                var measuredPorts = new List<PortDescription>();
 
+                foreach (var port in ports)
+                {
+                    var ioDevice = MainViewModel.IoDevices.FirstOrDefault(io => io.Name == port.Device);
+                    if (ioDevice == null) return null;
+                    measuredPorts.Add(new PortDescription(port.Id, port.Type, ioDevice, port.Name));
+                }
+
+                return measuredPorts;
+            }
+            
         }
 
         private void Border_OnMouseDown(object sender, MouseButtonEventArgs e)
