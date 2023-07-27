@@ -53,6 +53,19 @@
       <Resource Include="Icons\icons-browse-folder.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Resource>
+      <None Remove="bin\Debug\net7.0-windows\Data\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="bin\Debug\net7.0-windows\Data\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="bin\Debug\net7.0-windows\Data\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Remove="bin\Debug\net7.0-windows\Data\**" />
     </ItemGroup>
 
 </Project>

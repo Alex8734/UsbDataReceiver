@@ -40,13 +40,16 @@ public static class LogManager
     private static async void LogLoop()
     {
         Console.WriteLine("Starting Log Loop");
+        int logCount = 0;
         while (IsLogging)
         {
             for (int i = 0; i < LoggerList.Count; i++)
             {
                 await LoggerList[i].Log();
+                Console.WriteLine($"Logged {LoggerList[i].Device.Name}    {logCount}.");
                 Thread.Sleep(Interval/ LoggerList.Count);
             }
+            logCount++;
         }
     }
     

@@ -30,25 +30,19 @@ public class ChartLayoutViewModel : ObservableObject
         Strokes.Push(Brushes.Black);
     }
     
-    public void AddLine(string name, List<double> x, List<double> y)
+    public void AddLine(string name, List<double> x, List<double> y, SolidColorBrush stroke )
     {
-        if(!name.Contains("Max") && !name.Contains("Min"))
-        {
-            Strokes.Pop();
-        }
-        Lines.Add(name,new(name, Strokes.Peek()));
+        
+        Lines.Add(name,new(name, stroke));
         Lines[name].LineChart.Plot(x,y);
         Lines[name].LineChart.Visibility = Visibility.Visible;
         OnPropertyChanged();
     }
     
-    public void AddLine(string name)
+    public void AddLine(string name, SolidColorBrush stroke)
     {
-        if(!name.Contains("Max") && !name.Contains("Min"))
-        {
-            Strokes.Pop();
-        }
-        Lines.Add(name,new(name, Strokes.Peek()));
+        
+        Lines.Add(name,new(name, stroke));
         Lines[name].LineChart.Plot(new[]{Lines[name].HoursTicked},new[]{0});
         Lines[name].LineChart.Visibility = Visibility.Visible;
         OnPropertyChanged();

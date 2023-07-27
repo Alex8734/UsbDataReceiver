@@ -20,7 +20,7 @@ public partial class ChartItem : UserControl
         Interval = TimeSpan.FromMilliseconds(200)
     };
 
-    public ChartItem(string title, List<MeasurementData> logData,string measurePortKey)
+    public ChartItem(string title, List<MeasurementData> logData,string measurePortKey, SolidColorBrush stroke)
     {
         InitializeComponent();
 
@@ -64,7 +64,7 @@ public partial class ChartItem : UserControl
         }
         foreach (var (key, value) in data)
         {
-            vm.AddLine(key, value.x, value.y);
+            vm.AddLine(key, value.x, value.y, stroke);
         }
 
         foreach (var graph in vm.LineGraphs)
@@ -79,7 +79,7 @@ public partial class ChartItem : UserControl
     /// </summary>
     /// <param name="device">the measured Device</param>
     /// <param name="measurePortKey">if you want to measure just a Port like (Voltage) with (MaxVoltage) and (MinVoltage) add just the (Voltage) key!</param>
-    public ChartItem(MeasuredDevice device, string? measurePortKey = null)
+    public ChartItem(MeasuredDevice device, SolidColorBrush stroke, string? measurePortKey = null)
     {
         InitializeComponent();
 
@@ -106,7 +106,7 @@ public partial class ChartItem : UserControl
         
         foreach (var (key,_) in GetDataWithContainingKey(device.Data,measurePortKey))
         {
-            vm.AddLine(key);
+            vm.AddLine(key, stroke);
         }
 
         foreach (var graph in vm.LineGraphs)

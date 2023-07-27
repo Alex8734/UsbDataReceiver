@@ -94,7 +94,7 @@ public class MainViewModel : ObservableObject
     public RelayCommand BackButtonCommand { get; set; }
 
     public AddDeviceViewModel AddDeviceVM { get; set; }
-    public DataOverviewViewModel AllDataDisplayVM { get; set; }
+    public HomeViewModel AllDataDisplayVM { get; set; }
     
     private object _currentView = null!;
     private Visibility _backButtonVisibility;
@@ -125,7 +125,7 @@ public class MainViewModel : ObservableObject
     {
         
         //init Views
-        AllDataDisplayVM = new DataOverviewViewModel();
+        AllDataDisplayVM = new HomeViewModel();
         AddDeviceVM = new AddDeviceViewModel();
         
         CurrentView = AllDataDisplayVM;

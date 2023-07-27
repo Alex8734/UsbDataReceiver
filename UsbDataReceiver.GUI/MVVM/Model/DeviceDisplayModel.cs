@@ -62,7 +62,7 @@ public sealed class DeviceDisplayModel : Border
             Foreground = Brushes.Gray,
             Padding = new Thickness(10, 0, 0, 0),
             FontSize = 10,
-            Content = string.Join(" / ", device.Ports.Select(p => p.Id))
+            Content = string.Join(", ",device.Ports.Select(p => p.Device.Name).Distinct()) + "  -  " + string.Join(" / ", device.Ports.Select(p => p.Id))
         };
         Grid.SetRow(deviceInfoLabel, 1);
         Grid.SetColumn(deviceInfoLabel, 0);

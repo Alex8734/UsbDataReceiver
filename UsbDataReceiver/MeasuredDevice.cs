@@ -20,11 +20,16 @@ public class MeasuredDevice
     private AnalogMultiChannelReader Reader { get; }
     [JsonIgnore]
     public Dictionary<string, double> Data { get; } = new();
+    public Dictionary<string, Queue<double>> FloatingMeanQueues;
+    private DateTime StartedFillingQueueAt { get; set; }
+    public bool QueueIsFull => (DateTime.Now - StartedFillingQueueAt) >= TimeSpan.FromMilliseconds(400);
     [JsonConstructor]
     public MeasuredDevice(string name, IEnumerable<PortDescription> ports)
     {
+        FloatingMeanQueues = new Dictionary<string, Queue<double>>();
         Name = name;
         _dataManager = new DataManager(this);
+        StartedFillingQueueAt = DateTime.Now;
         Ports = ports.ToList().AsReadOnly();
         foreach (var port in Ports)
         {

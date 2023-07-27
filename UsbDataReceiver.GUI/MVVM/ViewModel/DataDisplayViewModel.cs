@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 using InteractiveDataDisplay.WPF;
 using UsbDataReceiver.GUI.Core;
 using UsbDataReceiver.GUI.MVVM.View;
@@ -15,6 +16,7 @@ public class DataDisplayViewModel : ObservableObject
 {
     public ObservableCollection<ChartItem> Views { get; }
     private string _deviceName;
+    public Stack<SolidColorBrush> Strokes { get; }
     public string DeviceName
     {
         get => _deviceName;
@@ -28,8 +30,15 @@ public class DataDisplayViewModel : ObservableObject
 
     public DataDisplayViewModel()
     {
+        Strokes = new Stack<SolidColorBrush>();
         Views = new ObservableCollection<ChartItem>();
         _deviceName = string.Empty;
+
+        foreach (var stroke in Line.Strokes.Reverse())
+        {
+            Strokes.Push(stroke);
+        }
+        
     }
     public void SetData(List<MeasurementData> data,string deviceName)
     {
@@ -43,7 +52,7 @@ public class DataDisplayViewModel : ObservableObject
                      .Where(d => !d.Key.Contains("Max") && !d.Key.Contains("Min"))
                      .Select(v => v.Key))
         {
-            var chartLayout = new ChartItem(key, data, key);
+            var chartLayout = new ChartItem(key, data, key,Strokes.Pop());
             Views.Add(chartLayout);
         }
     }
@@ -59,7 +68,7 @@ public class DataDisplayViewModel : ObservableObject
                      .Where(d => !d.Key.Contains("Max") && !d.Key.Contains("Min"))
                      .Select(v => v.Key))
         {
-            var chartLayout = new ChartItem(device, key);
+            var chartLayout = new ChartItem(device,Strokes.Pop(), key);
             Views.Add(chartLayout);
         }
         OnPropertyChanged(nameof(Views));

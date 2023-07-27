@@ -49,18 +49,33 @@ public class DataManager
                 if (data is null) continue;
                 var dataWithoutMinMax = data.Where(d => !d.Key.StartsWith("Max") && !d.Key.StartsWith("Min"))
                     .ToDictionary(p => p.Key, p => p.Value);
+
+                
+                
                 foreach( var (key,value) in dataWithoutMinMax)
                 {
-                    UpdateValue(key, value, DataDevices[i].Data, data);
+                    if(!DataDevices[i].FloatingMeanQueues.ContainsKey(key))
+                    {
+                        DataDevices[i].FloatingMeanQueues.Add(key, new Queue<double>());
+                    }
+                    DataDevices[i].FloatingMeanQueues[key].Enqueue(value);
+                    if(DataDevices[i].QueueIsFull)
+                    {
+                        DataDevices[i].FloatingMeanQueues[key].Dequeue();
+                    }
+                    var mean = CalculateFloatingMean(DataDevices[i].FloatingMeanQueues[key]);
+                    UpdateValue(key, value, DataDevices[i].Data );
                 }
+                
                 Thread.Sleep( DataDevices.Count != 0 ? UpdateInterval/DataDevices.Count : UpdateInterval);   
             }
         }
         
-        void UpdateValue(string key, double value, IDictionary<string, double> data, IDictionary<string,double> newData)
+        void UpdateValue(string key, double value, IDictionary<string, double> data)
         {
             string maxKey = "Max"+key;
             string minKey = "Min"+key;
+            
             data[key] = value;
             
             if(!data.ContainsKey(maxKey))
@@ -76,6 +91,22 @@ public class DataManager
             data[maxKey] = Math.Max(data[maxKey], value);
             data[minKey] = Math.Min(data[minKey], value);
             
+        }
+        
+        double CalculateFloatingMean(Queue<double> queue)
+        {
+            var values = new List<double>();
+            foreach (var value in queue)
+            {
+                values.Add(value);
+            }
+            values.Sort();
+            if (values.Count < 2) return values.FirstOrDefault();
+            if(values.Count % 2 == 0)
+            {
+                return (values.ElementAt(values.Count / 2) + values.ElementAt(values.Count / 2) - 1 ) / 2;
+            }
+            return values.ElementAt(values.Count / 2);
         }
     }
     
