@@ -96,7 +96,7 @@ public class Line
     public LineGraph LineChart { get; set; }
     public DateTime StartedAt { get; set; }
     public bool LegendVisibility { get; set; }
-    public double HoursTicked => (DateTime.Now-StartedAt).TotalMinutes;
+    public double HoursTicked => (DateTime.Now-StartedAt).TotalHours;
     
     public SolidColorBrush GetDarkerColor(SolidColorBrush brush, double factor)
     {

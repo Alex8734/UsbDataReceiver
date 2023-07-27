@@ -16,7 +16,7 @@ public class Logger
         LogDetails = logDetails;
         LogFileDir = $"{logPath}/{Device.Name}";
 
-        LogFilePath = $"{LogFileDir}/{currentDate:yyyy-MM-dd}-{LogDetails}.csv";
+        LogFilePath = $"{LogFileDir}/{currentTime:yy-MMM-dd-H-mm-ss}-{LogDetails}.csv";
         
         if(!Path.Exists(LogFileDir))
         {

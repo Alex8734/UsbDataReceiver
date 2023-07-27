@@ -41,6 +41,7 @@
                       Background="Gray"
                       ItemsSource="{Binding MeasurementTypes}"
                       SelectedIndex="0"
+                      SelectionChanged="TypeSelector_OnSelectionChanged"
                       IsSynchronizedWithCurrentItem="True">
             </ComboBox>
             <Label Foreground="Gray" FontSize="14">NI Device:</Label>

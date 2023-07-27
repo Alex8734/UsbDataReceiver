@@ -1,18 +1,23 @@
 [
   {
-    "Name": "New Device",
+    "Name": "TestD",
+    "Ports": [
+      {
+        "Id": 1,
+        "Type": "ampere",
+        "Device": "Dev2",
+        "Name": "LadeStrom"
+      }
+    ]
+  },
+  {
+    "Name": "TestF",
     "Ports": [
       {
         "Id": 0,
-        "Type": "voltage",
-        "Device": "Dev1",
-        "Name": "LadeStrom"
-      },
-      {
-        "Id": 1,
-        "Type": "voltage",
-        "Device": "Dev1",
-        "Name": "LadeSpannung"
+        "Type": "ampere",
+        "Device": "Dev2",
+        "Name": "Ladestrom"
       }
     ]
   }

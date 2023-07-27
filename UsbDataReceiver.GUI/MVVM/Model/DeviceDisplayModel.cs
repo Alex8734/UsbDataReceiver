@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -105,6 +106,23 @@ public sealed class DeviceDisplayModel : Border
                 btn.Content = "▶";
                 btn.Foreground = Brushes.Lime;
                 LogManager.StopLoggingDevice(RepresentedDevice.Name);
+                if(DataContext is not MainViewModel vm) return;
+                vm.OnPropertyChanged(nameof(vm.DeviceLogs));
+                foreach (var log in vm.DeviceLogs)
+                {
+                    
+                    if(log is not LogDisplayModel logDisplay)continue;
+                    if(logDisplay.TitleName == RepresentedDevice.Name)
+                    {
+                        logDisplay.DataContext = DataContext;
+                        logDisplay.LogDisplay_Click(this,null);
+                        if(vm.CurrentView is not LogView{DataContext: LogViewModel lvm}) return;
+                        var deviceLog = lvm.DisplayLogs.Last();
+                        deviceLog.DataContext = lvm;
+                        deviceLog.LogDisplay_Click(this, null);
+                    }
+                        
+                }
                 break;
         }
         

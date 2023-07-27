@@ -138,28 +138,31 @@
                     BorderThickness="0,0,0,.3"
                     BorderBrush="LightGray"
                     Margin="8,0,8,0"
-                    Height="40">
-                <StackPanel HorizontalAlignment="Left"
-                            Orientation="Horizontal">
-                    <Label Content="Logs"
-                           Width="160"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Left"
-                           FontWeight="Medium"
-                           Foreground="Gray"/>
-                    <Button Background="Transparent"
-                            BorderThickness=".6"
-                            Foreground="Gray"
-                            FontSize="15"
-                            FontWeight="Bold"
-                            Height="24"
-                            Width="24"
-                            Command="{Binding SelectLogFolderCommand}"
-                            Click="ButtonBase_OnClick">
-                        <Button.Content>
-                            <Image Width="18" Source="Icons/icons-browse-folder.png"/>
-                        </Button.Content>
-                    </Button>
+                    Height="50">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel HorizontalAlignment="Left"
+                                Orientation="Horizontal">
+                        <Label Content="Logs"
+                               Width="160"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left"
+                               FontWeight="Medium"
+                               Foreground="Gray"/>
+                        <Button Background="Transparent"
+                                BorderThickness=".6"
+                                Foreground="Gray"
+                                FontSize="15"
+                                FontWeight="Bold"
+                                Height="24"
+                                Width="24"
+                                Command="{Binding SelectLogFolderCommand}"
+                                Click="ButtonBase_OnClick">
+                            <Button.Content>
+                                <Image Width="18" Source="Icons/icons-browse-folder.png"/>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                    
                 </StackPanel>
             </Border>
             <ItemsControl x:Name="LogList" Grid.Row="5" 

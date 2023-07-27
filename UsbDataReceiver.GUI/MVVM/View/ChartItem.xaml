@@ -20,7 +20,6 @@
                   Background="Transparent"
                   Foreground="Gray"
                   LegendVisibility="Hidden"
-                  IsAutoFitEnabled="True"
                   IsManipulationEnabled="False"
                   IsEnabled="True"
                   IsVerticalNavigationEnabled="False"

@@ -12,15 +12,15 @@ using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 
 namespace UsbDataReceiver.GUI.MVVM.Model;
 
-public class LogItemDisplay : LogDisplay
+public class LogItemDisplayModel : LogDisplayModel
 {
     private List<MeasurementData> _logs;
-    public LogItemDisplay(string logName, List<MeasurementData> logs) : base(logName)
+    public LogItemDisplayModel(string logName, List<MeasurementData> logs) : base(logName)
     {
         _logs = logs;
     }
 
-    protected override void LogDisplay_Click(object sender, MouseButtonEventArgs e)
+    public override void LogDisplay_Click(object sender, MouseButtonEventArgs e)
     {
         if(DataContext is not LogViewModel vm) return;
         var view = new DataDisplayView();
@@ -31,11 +31,11 @@ public class LogItemDisplay : LogDisplay
     }
 }
 
-public class LogDisplay : Border
+public class LogDisplayModel : Border
 {
     public string TitleName { get; set; }
     
-    public LogDisplay(string deviceName)
+    public LogDisplayModel(string deviceName)
     {
         
         TitleName = deviceName;
@@ -48,7 +48,7 @@ public class LogDisplay : Border
         MouseLeave += LogDisplay_MouseLeave;
     }
     
-    protected virtual void LogDisplay_Click(object sender, MouseButtonEventArgs e)
+    public virtual void LogDisplay_Click(object sender, MouseButtonEventArgs e)
     {
         if(DataContext is not MainViewModel vm) return;
         var devLogs = LogManager.ReadDeviceLogs($"{LogManager.LogPath}/{TitleName}");

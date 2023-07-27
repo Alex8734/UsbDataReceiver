@@ -117,11 +117,14 @@ public partial class ChartItem : UserControl
         _timer.Tick += (sender, args) =>
         {
             vm.UpdateData(GetDataWithContainingKey(device.Data,measurePortKey));
-            if(vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.X)) >= plotter.PlotWidth )
+            plotter.PlotHeight = vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.Y));
+            if(vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.X)) < 0.2)
             {
-                
+                plotter.PlotWidth = vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.X));
+            }
+            else if(vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.X)) >= plotter.PlotWidth )
+            {
                 plotter.PlotOriginX = vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.X)) -plotter.PlotWidth;
-                plotter.PlotHeight = vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.Y));
             }
         };
         _timer.Start();

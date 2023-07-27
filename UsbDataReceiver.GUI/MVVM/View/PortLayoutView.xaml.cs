@@ -79,5 +79,13 @@ namespace UsbDataReceiver.GUI.MVVM.View
                 vm.OnPropertyChanged(nameof(vm.PortsOfSelectedDevice));
             }
         }
+
+        private void TypeSelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataContext is PortLayoutViewModel vm && TypeSelector.SelectedValue is not null && Enum.TryParse<MeasurementType>(TypeSelector.SelectedValue.ToString(), out MeasurementType selectedPortType))
+            {
+                vm.SelectedPortType = selectedPortType ;
+            }
+        }
     }
 }

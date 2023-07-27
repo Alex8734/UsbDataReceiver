@@ -39,11 +39,13 @@ public partial class AddDeviceView : UserControl
 
         var devName = innerTbx.Text;
         var ports = new List<PortDescription>();
+        if(vm.PortLayoutViews.Count < 1) return;
         foreach (var view in vm.PortLayoutViews)
         {
             if (view.DataContext is not PortLayoutViewModel portVm) continue;
             var selectedIoDev = MainViewModel.IoDevices.FirstOrDefault(d => d.Name == portVm.SelectedIoDevice);
             if(selectedIoDev == null || portVm.SelectedPort is null) continue;
+            if(portVm.PortName == "") return;
             ports.Add(new PortDescription(
                     (int)portVm.SelectedPort,
                     portVm.SelectedPortType, 
@@ -57,6 +59,7 @@ public partial class AddDeviceView : UserControl
         mainVm.AddDevice(newDev);
         mainVm.CurrentView = mainVm.AllDataDisplayVM;
         SaveLoader.SaveMeasuredDevices(MainViewModel.Devices);
+        mainVm.BackButtonVisibility = Visibility.Hidden;
     }
 
     private void Placeholder_OnGotFocus(object sender, RoutedEventArgs e)

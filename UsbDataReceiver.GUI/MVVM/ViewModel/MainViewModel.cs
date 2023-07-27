@@ -64,7 +64,7 @@ public class MainViewModel : ObservableObject
             var devices = Directory.GetDirectories(LogManager.LogPath).Where(d => Directory.GetFiles(d).Any(f => f.EndsWith(".csv"))).ToList();
             return new ObservableCollection<object>(
                 devices.Count > 0 
-                    ? devices.Select(d => new LogDisplay(d.Split("\\").Last())) 
+                    ? devices.Select(d => new LogDisplayModel(d.Split("\\").Last())) 
                     : new[]{NoLogsLabel});
         }
     }
