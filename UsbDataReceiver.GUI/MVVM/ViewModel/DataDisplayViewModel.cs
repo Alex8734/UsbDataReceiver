@@ -48,6 +48,8 @@ public class DataDisplayViewModel : ObservableObject
             Views.Clear();
             OnPropertyChanged(nameof(Views));
         }
+        if(data.Count < 1)
+            return;
         foreach (var key in data.First().Data
                      .Where(d => !d.Key.Contains("Max") && !d.Key.Contains("Min"))
                      .Select(v => v.Key))

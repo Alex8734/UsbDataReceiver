@@ -14,9 +14,9 @@ public class Logger
         var currentDate = DateOnly.FromDateTime(currentTime);
         
         LogDetails = logDetails;
-        LogFileDir = $"{logPath}/{Device.Name}";
+        LogFileDir = $"{logPath}/{Device.Name.Trim(' ')}";
 
-        LogFilePath = $"{LogFileDir}/{currentTime:yy-MMM-dd-H-mm-ss}-{LogDetails}.csv";
+        LogFilePath = $"{LogFileDir}/{currentTime:yy-MMM-dd--H-mm}-{LogDetails}.csv";
         
         if(!Path.Exists(LogFileDir))
         {
