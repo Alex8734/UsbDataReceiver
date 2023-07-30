@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "Name": "TestD",
+    "Ports": [
+      {
+        "Id": 0,
+        "Type": "ampere",
+        "Device": "Dev2",
+        "Name": "Ladestrom"
+      },
+      {
+        "Id": 1,
+        "Type": "voltage",
+        "Device": "Dev2",
+        "Name": "LadeSpannung"
+      }
+    ]
+  }
+]

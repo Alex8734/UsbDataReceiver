@@ -117,8 +117,8 @@ public partial class ChartItem : UserControl
         _timer.Tick += (sender, args) =>
         {
             vm.UpdateData(GetDataWithContainingKey(device.Data,measurePortKey));
-            plotter.PlotHeight = vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.Y));
-            if(vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.X)) < 0.2)
+            plotter.PlotHeight = vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.Y) - vm.Lines.Min(p => p.Value.LineChart.Points.Min(d => d.Y)));
+            if(vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.X)) < 0.02)
             {
                 plotter.PlotWidth = vm.Lines.Max(p => p.Value.LineChart.Points.Max(d => d.X));
             }
