@@ -3,13 +3,17 @@ using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
 namespace UsbDataReceiver;
-
+/// <summary>
+///  to load and save the devices
+///  dont need iodevices anymore because they are updated manually
+/// </summary>
 public static class SaveLoader
 {
     public static string Dir = "config/";
     public static string DeviceFile = $"{Dir}devices.json";
-    public static string IoDeviceFile = $"{Dir}io-devices.json";
-    
+    /// <summary>
+    ///  options for the json serializer
+    /// </summary>
     public static JsonSerializerOptions Options = new()
     {
         WriteIndented = true, // Set this to true for human-readable formatting
@@ -19,7 +23,10 @@ public static class SaveLoader
             new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, allowIntegerValues:true)
         }
     };
-    
+    /// <summary>
+    ///  loads all devices from the config folder
+    /// </summary>
+    /// <returns></returns>
     public static List<JsonMeasuredDevice> LoadMeasuredDevices()
     {
         if (!File.Exists(DeviceFile)) return new List<JsonMeasuredDevice>();
@@ -28,7 +35,10 @@ public static class SaveLoader
        
         return devices?.ToList() ?? new List<JsonMeasuredDevice>();
     }
-    
+    /// <summary>
+    ///  saves all devices to the config folder
+    /// </summary>
+    /// <param name="devices"></param>
     public static void SaveMeasuredDevices(List<MeasuredDevice> devices)
     {
         if (!Directory.Exists(Dir))

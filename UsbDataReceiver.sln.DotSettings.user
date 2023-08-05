@@ -4,4 +4,5 @@
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005Caresc_005Csource_005Crepos_005CUsbDataReceiver_005CUsbDataReceiver_002EGUI_005Clibs_005CSystem_002EWindows_002EForms_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005Caresc_005Csource_005Crepos_005CUsbDataReceiver_005CUsbDataReceiver_005Csrc_005Clibs_005CNationalInstruments_002ECommon_002Edll/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005Caresc_005Csource_005Crepos_005CUsbDataReceiver_005CUsbDataReceiver_005Csrc_005Clibs_005CNationalInstruments_002EDAQmx_002Edll/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005Caresc_005Csource_005Crepos_005CUsbDataReceiver_005CUsbDataReceiver_005Csrc_005Clibs_005CSystem_002EWindows_002EForms_002Edll/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=C_003A_005CUsers_005Caresc_005Csource_005Crepos_005CUsbDataReceiver_005CUsbDataReceiver_005Csrc_005Clibs_005CSystem_002EWindows_002EForms_002Edll/@EntryIndexedValue">True</s:Boolean>
+	</wpf:ResourceDictionary>

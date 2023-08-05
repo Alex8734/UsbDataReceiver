@@ -9,6 +9,13 @@ public static class Extensions
         if (value < 0) value = 0;
         return Math.Round(value, digits, MidpointRounding.AwayFromZero);
     }
+    /// <summary>
+    ///  calculates the value to the given type
+    /// </summary>
+    /// <param name="value">the value to calculate</param>
+    /// <param name="type">the type to convert</param>
+    /// <returns>the converted type</returns>
+    /// <exception cref="ArgumentOutOfRangeException">if type does not exits</exception>
     public static double CalculateToType(this double value, MeasurementType type )
     {
         switch (type)
